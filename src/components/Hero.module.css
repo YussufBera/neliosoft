@@ -1,0 +1,268 @@
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    /* Complex gradient with brand colors: Blue (#2563eb), Purple (#7c3aed), Pink (#db2777) */
+    background: radial-gradient(circle at 15% 50%, rgba(37, 99, 235, 0.08), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(219, 39, 119, 0.08), transparent 25%);
+    padding: 120px 20px 60px;
+}
+
+/* This is the new shimmering background layer */
+.background {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg at 50% 50%,
+            rgba(37, 99, 235, 0.05) 0deg,
+            rgba(124, 58, 237, 0.05) 60deg,
+            rgba(219, 39, 119, 0.05) 120deg,
+            rgba(37, 99, 235, 0.05) 180deg,
+            rgba(124, 58, 237, 0.05) 240deg,
+            rgba(219, 39, 119, 0.05) 300deg,
+            rgba(37, 99, 235, 0.05) 360deg);
+    animation: spin 120s linear infinite;
+    z-index: 0;
+    filter: blur(80px);
+    pointer-events: none;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Retaining blobs but making them more subtle enhancers */
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.4;
+    z-index: 0;
+}
+
+.blob1 {
+    top: 10%;
+    right: 10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.2) 0%, rgba(124, 58, 237, 0.1) 70%, transparent 100%);
+    animation: float 20s infinite ease-in-out;
+}
+
+.blob2 {
+    bottom: 10%;
+    left: 10%;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(219, 39, 119, 0.15) 0%, rgba(124, 58, 237, 0.1) 70%, transparent 100%);
+    animation: float 25s infinite ease-in-out reverse;
+}
+
+.content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.heroLogoWrapper {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.heroLogo {
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 30px rgba(124, 58, 237, 0.3));
+    border-radius: 24px;
+}
+
+.title {
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.highlight {
+    position: relative;
+    display: inline-block;
+}
+
+.subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    margin-bottom: 40px;
+    line-height: 1.6;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.actions {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 60px;
+}
+
+.buttonPrimary {
+    padding: 16px 36px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+    border-radius: 50px;
+    box-shadow: 0 10px 30px rgba(37, 99, 235, 0.25);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.buttonPrimary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px rgba(124, 58, 237, 0.3);
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+}
+
+.buttonSecondary {
+    padding: 16px 36px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #334155;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(203, 213, 225, 0.6);
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.buttonSecondary:hover {
+    background-color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border-color: #94a3b8;
+}
+
+.scrollIndicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.scrollText {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+}
+
+.mouseIcon {
+    width: 26px;
+    height: 40px;
+    border: 2px solid var(--primary);
+    border-radius: 20px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.wheel {
+    width: 4px;
+    height: 6px;
+    background-color: var(--primary);
+    border-radius: 2px;
+    position: absolute;
+    top: 6px;
+    animation: scrollWheel 2.5s infinite ease-in-out;
+}
+
+@keyframes scrollWheel {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(12px);
+        opacity: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 2.75rem;
+    }
+
+    .subtitle {
+        font-size: 1.1rem;
+    }
+
+    .heroLogo {
+        width: 100px;
+        height: 100px;
+    }
+
+    .actions {
+        flex-direction: column;
+        width: 100%;
+        max-width: 320px;
+        margin: 0 auto 40px;
+    }
+
+    .buttonPrimary,
+    .buttonSecondary {
+        width: 100%;
+    }
+}
