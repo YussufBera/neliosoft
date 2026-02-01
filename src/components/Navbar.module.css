@@ -1,56 +1,68 @@
+/* Navbar.module.css */
 .navbar {
     position: fixed;
-    top: 20px;
+    top: 24px;
     left: 50%;
     transform: translateX(-50%);
-    width: 95%;
-    max-width: 1200px;
-    padding: 12px 32px;
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    width: auto;
+    /* Width auto to shrink wrap content if needed, but min-width usually better */
+    min-width: 900px;
+    max-width: 95vw;
+    padding: 14px 40px;
+
+    /* Dark Glass Capsule Styling */
+    background: rgba(30, 30, 30, 0.85);
+    /* Dark background */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 100px;
+    /* Full pill shape */
+
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.3);
+
     z-index: 1000;
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    border-radius: 50px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s ease;
 }
 
 .scrolled {
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 10px 40px rgba(37, 99, 235, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
-    top: 15px;
-    padding: 10px 32px;
+    background: rgba(20, 20, 20, 0.95);
+    box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.5);
+    padding: 12px 40px;
+    /* Slightly smaller on scroll */
 }
 
 .container {
-    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
+    gap: 40px;
 }
 
+/* Logo */
 .logo {
     display: flex;
     align-items: center;
+    gap: 10px;
     text-decoration: none;
+    color: white;
 }
 
 .logoText {
-    font-size: 1.8rem;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 50%, #db2777 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-    /* Fallback */
-    position: relative;
+    font-family: var(--font-outfit), sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #ffffff;
+    text-transform: uppercase;
 }
 
+/* Nav Link Section */
 .navLinks {
     display: flex;
+    align-items: center;
     gap: 32px;
     list-style: none;
     margin: 0;
@@ -58,33 +70,42 @@
 }
 
 .navLink {
-    font-size: 1rem;
+    font-family: var(--font-outfit), sans-serif;
+    font-size: 0.75rem;
+    /* Small, uppercase */
     font-weight: 600;
-    color: #475569;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #a1a1aa;
+    /* Gray text */
     background: none;
     border: none;
     text-decoration: none;
-    transition: color 0.2s ease;
     cursor: pointer;
-    position: relative;
-    font-family: inherit;
-    padding: 4px 0;
+    transition: color 0.2s ease;
 }
 
 .navLink:hover {
-    color: #2563eb;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
+/* Mobile */
 .mobileMenuBtn {
     display: none;
     font-size: 1.5rem;
-    color: var(--text-primary);
+    color: white;
     background: none;
     border: none;
     cursor: pointer;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
+    .navbar {
+        min-width: 90%;
+        padding: 12px 20px;
+    }
+
     .navLinks {
         display: none;
     }
