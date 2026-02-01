@@ -4,53 +4,73 @@ import React, { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { Language } from '@/lib/translations';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronDown, Globe } from 'lucide-react';
 
 export default function LanguageSwitcher() {
     const { language, setLanguage } = useLanguage();
     const [isOpen, setIsOpen] = useState(false);
 
-    const languages: { code: Language; label: string; flag: string }[] = [
-        { code: 'DE', label: 'Deutsch', flag: '🇩🇪' },
-        { code: 'EN', label: 'English', flag: '🇬🇧' },
-        { code: 'TR', label: 'Türkçe', flag: '🇹🇷' },
-        { code: 'KU', label: 'Kurdî', flag: '☀️' }, // Kurdish flag often represented with sun or generic flag if not available
+    // Removed flags, keeping a clean list
+    const languages: { code: Language; label: string }[] = [
+        { code: 'DE', label: 'Deutsch' },
+        { code: 'EN', label: 'English' },
+        { code: 'TR', label: 'Türkçe' },
+        { code: 'KU', label: 'Kurdî' },
     ];
-
-    const currentLang = languages.find(l => l.code === language);
 
     return (
         <div className="relative" style={{ zIndex: 50 }}>
+            {/* Trigger Button */}
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md hover:bg-white/20 transition-all border border-white/10"
+                className="group flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300 outline-none hover:border-white/20 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]"
             >
-                <span className="text-lg">{currentLang?.flag}</span>
-                <span className="font-medium text-white text-sm">{language}</span>
+                <Globe size={16} className="text-gray-300 group-hover:text-white transition-colors" />
+                <span className="font-outfit font-medium text-sm text-gray-200 group-hover:text-white tracking-wide">
+                    {language}
+                </span>
+                <ChevronDown
+                    size={14}
+                    className={`text-gray-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+                />
             </button>
 
+            {/* Dropdown Menu */}
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
-                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                        transition={{ duration: 0.1 }}
-                        className="absolute right-0 top-full mt-2 w-32 bg-[#1e1b4b]/90 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden shadow-xl"
+                        initial={{ opacity: 0, y: 10, scale: 0.95, filter: "blur(10px)" }}
+                        animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+                        exit={{ opacity: 0, y: 10, scale: 0.95, filter: "blur(10px)" }}
+                        transition={{ duration: 0.2, ease: "circOut" }}
+                        className="absolute right-0 top-full mt-3 w-36 bg-[#0f0e24]/90 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden"
                     >
-                        {languages.map((lang) => (
-                            <button
-                                key={lang.code}
-                                onClick={() => {
-                                    setLanguage(lang.code);
-                                    setIsOpen(false);
-                                }}
-                                className={`w-full flex items-center gap-3 px-4 py-2 hover:bg-white/10 transition-colors text-left ${language === lang.code ? 'bg-white/10 text-white' : 'text-gray-300'
-                                    }`}
-                            >
-                                <span className="text-lg">{lang.flag}</span>
-                                <span className="text-sm font-medium">{lang.label}</span>
-                            </button>
-                        ))}
+                        <div className="flex flex-col p-1.5 gap-0.5">
+                            {languages.map((lang) => (
+                                <button
+                                    key={lang.code}
+                                    onClick={() => {
+                                        setLanguage(lang.code);
+                                        setIsOpen(false);
+                                    }}
+                                    className={`relative w-full flex items-center justify-between px-3 py-2 rounded-xl transition-all duration-200 group ${language === lang.code
+                                            ? 'bg-white/10 text-white shadow-inner'
+                                            : 'text-gray-400 hover:text-white hover:bg-white/5'
+                                        }`}
+                                >
+                                    <span className="text-xs font-semibold tracking-wider font-outfit">{lang.label}</span>
+                                    <span className="text-[10px] opacity-50 font-mono uppercase">{lang.code}</span>
+
+                                    {/* Active Indicator Dot */}
+                                    {language === lang.code && (
+                                        <motion.div
+                                            layoutId="activeLang"
+                                            className="absolute left-1 w-1 h-3 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"
+                                        />
+                                    )}
+                                </button>
+                            ))}
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>
