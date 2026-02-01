@@ -4,11 +4,11 @@ import React, { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { Language } from '@/lib/translations';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Globe } from 'lucide-react';
+import { Globe, ChevronDown } from 'lucide-react';
 
 export default function LanguageSwitcher() {
     const { language, setLanguage } = useLanguage();
-    const [isHovered, setIsHovered] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     const languages: { code: Language; label: string }[] = [
         { code: 'DE', label: 'Deutsch' },
@@ -18,82 +18,71 @@ export default function LanguageSwitcher() {
     ];
 
     return (
-        <div
-            className="relative z-50 flex items-center justify-center p-2"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-        >
-            <motion.div
-                layout
-                className="relative flex items-center bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.12)] rounded-full overflow-hidden cursor-pointer"
-                initial={{ borderRadius: 24 }}
-                animate={{
-                    borderRadius: 24,
-                    width: isHovered ? 'auto' : 44,
-                    transition: { type: "spring", stiffness: 350, damping: 25 }
-                }}
+        <div className="relative z-50">
+            {/* Trigger Button - Dark Glass Capsule (Makas Style Vibe) */}
+            <button
+                onClick={() => setIsOpen(!isOpen)}
+                className={`flex items-center gap-2.5 px-5 py-2.5 rounded-full transition-all duration-300 outline-none
+          ${isOpen
+                        ? 'bg-[#1a1a1a] text-white shadow-2xl scale-105 ring-2 ring-white/10'
+                        : 'bg-[#0f0f0f] text-gray-300 hover:bg-black hover:text-white hover:scale-105 hover:shadow-xl'
+                    } border border-white/5 backdrop-blur-md`}
             >
-                {/* Collapsed State: Globe + Current Code */}
-                <AnimatePresence mode='popLayout'>
-                    {!isHovered && (
-                        <motion.div
-                            key="collapsed"
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.8 }}
-                            transition={{ duration: 0.2 }}
-                            className="absolute inset-0 flex items-center justify-center pointer-events-none"
-                        >
-                            <span className="font-outfit font-bold text-sm bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                                {language}
-                            </span>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
+                <Globe size={16} className={`${isOpen ? 'text-blue-400' : 'text-gray-400 group-hover:text-white'} transition-colors`} />
 
-                {/* Expanded State: List of Languages */}
-                <div className="flex items-center p-1.5 gap-1">
-                    {/* Placeholder to keep height when collapsed */}
-                    <div className={`w-[32px] h-[32px] flex items-center justify-center transition-opacity duration-200 ${isHovered ? 'opacity-0 w-0 overflow-hidden' : 'opacity-0'}`}>
-                        <Globe size={18} />
-                    </div>
+                <div className="flex flex-col items-start leading-none gap-0.5">
+                    <span className="font-outfit font-bold text-sm tracking-wide">
+                        {language}
+                    </span>
+                </div>
 
-                    <AnimatePresence mode='wait'>
-                        {isHovered && languages.map((lang) => {
-                            const isActive = language === lang.code;
-                            return (
-                                <motion.button
+                <ChevronDown
+                    size={14}
+                    className={`text-gray-500 transition-transform duration-300 ${isOpen ? 'rotate-180 text-white' : ''}`}
+                />
+            </button>
+
+            {/* Dropdown Menu - Premium Dark Glass Card */}
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 10, scale: 0.95, filter: "blur(10px)" }}
+                        animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+                        exit={{ opacity: 0, y: 10, scale: 0.95, filter: "blur(10px)" }}
+                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                        className="absolute right-0 top-full mt-3 w-40 bg-[#0a0a0a]/95 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-[0_20px_50px_-10px_rgba(0,0,0,0.5)] overflow-hidden p-1.5"
+                    >
+                        <div className="flex flex-col gap-0.5">
+                            {languages.map((lang) => (
+                                <button
                                     key={lang.code}
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.9 }}
-                                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                                    onClick={(e) => {
-                                        e.stopPropagation();
+                                    onClick={() => {
                                         setLanguage(lang.code);
-                                        setIsHovered(false);
+                                        setIsOpen(false);
                                     }}
-                                    className="relative px-4 py-2 text-sm font-medium rounded-full transition-colors z-10"
+                                    className={`relative flex items-center justify-between px-3 py-2.5 rounded-xl transition-all duration-200 group w-full text-left
+                    ${language === lang.code
+                                            ? 'bg-white/10 text-white'
+                                            : 'text-gray-400 hover:text-white hover:bg-white/5'
+                                        }`}
                                 >
-                                    {/* Background Highlight */}
-                                    {isActive && (
+                                    <span className="font-outfit font-medium text-sm z-10">{lang.label}</span>
+                                    <span className="font-mono text-[10px] uppercase opacity-40 z-10">{lang.code}</span>
+
+                                    {language === lang.code && (
                                         <motion.div
-                                            layoutId="active-pill"
-                                            className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full shadow-lg"
-                                            transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                                            layoutId="active-lang-glow"
+                                            className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-xl"
+                                            initial={false}
+                                            transition={{ duration: 0.3 }}
                                         />
                                     )}
-
-                                    {/* Text/Label */}
-                                    <span className={`relative z-10 font-outfit tracking-wide transition-colors duration-200 ${isActive ? 'text-white font-semibold' : 'text-slate-600 hover:text-slate-900'}`}>
-                                        {lang.label}
-                                    </span>
-                                </motion.button>
-                            )
-                        })}
-                    </AnimatePresence>
-                </div>
-            </motion.div>
+                                </button>
+                            ))}
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }
