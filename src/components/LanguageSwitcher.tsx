@@ -1,77 +1,105 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { Language } from '@/lib/translations';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Globe, Check, ChevronDown } from 'lucide-react';
 
 export default function LanguageSwitcher() {
     const { language, setLanguage } = useLanguage();
-    const [isHovered, setIsHovered] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    const containerRef = useRef<HTMLDivElement>(null);
 
-    // Minimal 2-letter codes, sorted so current is first when collapsed? 
-    // No, keep consistent order for muscle memory.
-    const languages: Language[] = ['DE', 'EN', 'TR', 'KU'];
+    // Close when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+                setIsOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    const languages: { code: Language; label: string; sub: string }[] = [
+        { code: 'EN', label: 'English', sub: 'United Kingdom' },
+        { code: 'DE', label: 'Deutsch', sub: 'Deutschland' },
+        { code: 'TR', label: 'Türkçe', sub: 'Türkiye' },
+        { code: 'KU', label: 'Kurdî', sub: 'Kurdistan' },
+    ];
+
+    const currentLang = languages.find(l => l.code === language);
 
     return (
-        <div
-            className="relative flex items-center z-50 h-10"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-        >
-            <motion.div
-                layout
-                className="flex items-center bg-white/40 backdrop-blur-md border border-white/30 shadow-[0_4px_20px_rgba(0,0,0,0.05)] rounded-full overflow-hidden cursor-pointer"
-                initial={{ width: 44 }} // Width for single item
-                animate={{
-                    width: isHovered ? 'auto' : 44,
-                    backgroundColor: isHovered ? 'rgba(255, 255, 255, 0.6)' : 'rgba(255, 255, 255, 0.4)'
-                }}
-                transition={{ type: "spring", stiffness: 400, damping: 30 }}
+        <div className="relative z-50" ref={containerRef}>
+            {/* Trigger Button - Clean, light aesthetic */}
+            <button
+                onClick={() => setIsOpen(!isOpen)}
+                className={`flex items-center gap-3 px-4 py-2 rounded-xl border transition-all duration-300 outline-none
+          ${isOpen
+                        ? 'bg-white border-blue-200 shadow-md ring-2 ring-blue-100'
+                        : 'bg-white/80 border-transparent hover:bg-white hover:shadow-sm'
+                    }`}
             >
-                <AnimatePresence mode='popLayout'>
-                    {!isHovered ? (
-                        <motion.div
-                            key="collapsed-view"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            className="absolute inset-0 flex items-center justify-center w-[44px]"
-                        >
-                            <span className="font-outfit font-bold text-sm text-[#334155]">{language}</span>
-                        </motion.div>
-                    ) : null}
+                <Globe size={18} className="text-slate-600" />
+                <span className="font-outfit font-medium text-slate-700 text-sm">
+                    {currentLang?.label}
+                </span>
+                <ChevronDown
+                    size={14}
+                    className={`text-slate-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+                />
+            </button>
 
+            {/* Dropdown Menu - Detached card style often seen in modern UIs (Photo 3 vibe) */}
+            <AnimatePresence>
+                {isOpen && (
                     <motion.div
-                        className="flex items-center p-1"
-                        style={{ opacity: isHovered ? 1 : 0, pointerEvents: isHovered ? 'auto' : 'none' }}
+                        initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 8, scale: 0.98 }}
+                        transition={{ duration: 0.2, ease: "easeOut" }}
+                        className="absolute right-0 top-full mt-2 w-64 bg-white rounded-2xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-slate-100 p-2 overflow-hidden"
                     >
-                        {languages.map((lang) => (
-                            <button
-                                key={lang}
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    setLanguage(lang);
-                                    setIsHovered(false);
-                                }}
-                                className="relative px-3 py-1.5 text-sm font-medium transition-colors outline-none z-10"
-                            >
-                                <span className={`relative z-10 transition-colors duration-200 ${language === lang ? 'text-white' : 'text-[#475569] hover:text-[#2563eb]'}`}>
-                                    {lang}
-                                </span>
+                        <div className="flex flex-col gap-1">
+                            {languages.map((lang) => (
+                                <button
+                                    key={lang.code}
+                                    onClick={() => {
+                                        setLanguage(lang.code);
+                                        setIsOpen(false);
+                                    }}
+                                    className={`group flex items-center justify-between px-3 py-3 rounded-xl transition-all duration-200 text-left
+                    ${language === lang.code
+                                            ? 'bg-blue-50 text-blue-700'
+                                            : 'hover:bg-slate-50 text-slate-700'
+                                        }`}
+                                >
+                                    <div className="flex flex-col">
+                                        <span className="text-sm font-semibold font-outfit">
+                                            {lang.label}
+                                        </span>
+                                        <span className={`text-xs ${language === lang.code ? 'text-blue-500' : 'text-slate-400'}`}>
+                                            {lang.sub}
+                                        </span>
+                                    </div>
 
-                                {language === lang && (
-                                    <motion.div
-                                        layoutId="active-lang-pill"
-                                        className="absolute inset-0 bg-[#2563eb] rounded-full shadow-sm"
-                                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                                    />
-                                )}
-                            </button>
-                        ))}
+                                    {language === lang.code && (
+                                        <motion.div
+                                            initial={{ scale: 0 }}
+                                            animate={{ scale: 1 }}
+                                            className="text-blue-600"
+                                        >
+                                            <Check size={16} strokeWidth={3} />
+                                        </motion.div>
+                                    )}
+                                </button>
+                            ))}
+                        </div>
                     </motion.div>
-                </AnimatePresence>
-            </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }

@@ -3,6 +3,7 @@ import { Outfit } from "next/font/google"; // Using Outfit as requested for mode
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { LanguageProvider } from "@/context/LanguageContext";
+import PageTransition from "@/components/PageTransition";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -25,6 +26,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${outfit.variable} antialiased`}>
         <LanguageProvider>
+          <PageTransition />
           <Navbar />
           {children}
         </LanguageProvider>
