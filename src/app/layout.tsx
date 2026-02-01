@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Outfit } from "next/font/google"; // Using Outfit as requested for modern look
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -23,8 +24,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${outfit.variable} antialiased`}>
-        <Navbar />
-        {children}
+        <LanguageProvider>
+          <Navbar />
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );

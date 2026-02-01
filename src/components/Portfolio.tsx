@@ -4,29 +4,32 @@ import React from "react";
 import { motion } from "framer-motion";
 import styles from "./Portfolio.module.css";
 import Image from "next/image";
-
-const projects = [
-    {
-        title: "Transfer Services",
-        category: "Tourism & Travel Application",
-        link: "https://www.get4trip.com",
-        image: "/get4trip-preview.png"
-    },
-    {
-        title: "Barber Reservation System",
-        category: "Online Appointment Platform",
-        link: "https://berber-pi.vercel.app",
-        image: "/barber-preview-v2.png"
-    },
-    {
-        title: "Migration Consultancy Service",
-        category: "Educational Consultancy Platform",
-        link: "https://easygoc.com",
-        image: "/easygoc-preview-v2.png"
-    },
-];
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Portfolio() {
+    const { t } = useLanguage();
+
+    const projects = [
+        {
+            title: t.portfolio.project_transfer,
+            category: t.portfolio.cat_travel,
+            link: "https://www.get4trip.com",
+            image: "/get4trip-preview.png"
+        },
+        {
+            title: t.portfolio.project_barber,
+            category: t.portfolio.cat_appointment,
+            link: "https://berber-pi.vercel.app",
+            image: "/barber-preview-v2.png"
+        },
+        {
+            title: t.portfolio.project_migration,
+            category: t.portfolio.cat_consultancy,
+            link: "https://easygoc.com",
+            image: "/easygoc-preview-v2.png"
+        },
+    ];
+
     return (
         <section className={styles.portfolio} id="portfolio">
             <div className={styles.container}>
@@ -38,7 +41,7 @@ export default function Portfolio() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.5 }}
                     >
-                        Our Work
+                        {t.portfolio.title}
                     </motion.h2>
                     <motion.p
                         className={styles.subtitle}
@@ -47,7 +50,7 @@ export default function Portfolio() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: 0.1 }}
                     >
-                        Recent projects we've crafted for our clients.
+                        {t.portfolio.subtitle}
                     </motion.p>
                 </div>
 
@@ -93,7 +96,7 @@ export default function Portfolio() {
                     viewport={{ once: true }}
                     transition={{ delay: 0.5 }}
                 >
-                    Click on the sites to visit them
+                    {t.portfolio.instruction}
                 </motion.p>
             </div>
         </section>

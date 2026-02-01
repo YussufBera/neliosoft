@@ -4,26 +4,29 @@ import React from "react";
 import { motion } from "framer-motion";
 import styles from "./Services.module.css";
 import { Monitor, Briefcase, Code } from "lucide-react";
-
-const services = [
-    {
-        title: "Website Design & Development",
-        description: "Custom-built websites that look great on any device. We focus on speed, design, and user experience.",
-        icon: <Monitor size={32} />
-    },
-    {
-        title: "Business Websites",
-        description: "Professional digital presence for small and medium businesses to attract customers and build trust.",
-        icon: <Briefcase size={32} />
-    },
-    {
-        title: "Custom Online Solutions",
-        description: "From simple landing pages to complex web applications, we build solutions tailored to your unique needs.",
-        icon: <Code size={32} />
-    }
-];
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Services() {
+    const { t } = useLanguage();
+
+    const services = [
+        {
+            title: t.services.design_title,
+            description: t.services.design_desc,
+            icon: <Monitor size={32} />
+        },
+        {
+            title: t.services.business_title,
+            description: t.services.business_desc,
+            icon: <Briefcase size={32} />
+        },
+        {
+            title: t.services.solutions_title,
+            description: t.services.solutions_desc,
+            icon: <Code size={32} />
+        }
+    ];
+
     return (
         <section className={styles.services} id="services">
             <div className={styles.container}>
@@ -35,7 +38,7 @@ export default function Services() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.5 }}
                     >
-                        What We Do
+                        {t.services.title}
                     </motion.h2>
                     <motion.p
                         className={styles.subtitle}
@@ -44,7 +47,7 @@ export default function Services() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: 0.1 }}
                     >
-                        Comprehensive digital services for forward-thinking businesses.
+                        {t.services.subtitle}
                     </motion.p>
                 </div>
 

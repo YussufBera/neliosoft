@@ -3,10 +3,12 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Navbar.module.css";
 import Link from "next/link";
-import Image from "next/image";
+import { useLanguage } from "@/context/LanguageContext";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
+    const { t } = useLanguage();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -32,11 +34,12 @@ export default function Navbar() {
                 </Link>
 
                 <ul className={styles.navLinks}>
-                    <li><button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className={styles.navLink}>Home</button></li>
-                    <li><button onClick={() => scrollToSection('about')} className={styles.navLink}>About</button></li>
-                    <li><button onClick={() => scrollToSection('services')} className={styles.navLink}>Services</button></li>
-                    <li><button onClick={() => scrollToSection('portfolio')} className={styles.navLink}>Portfolio</button></li>
-                    <li><button onClick={() => scrollToSection('contact')} className={styles.navLink}>Contact</button></li>
+                    <li><button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className={styles.navLink}>{t.nav.home}</button></li>
+                    <li><button onClick={() => scrollToSection('about')} className={styles.navLink}>{t.nav.about}</button></li>
+                    <li><button onClick={() => scrollToSection('services')} className={styles.navLink}>{t.nav.services}</button></li>
+                    <li><button onClick={() => scrollToSection('portfolio')} className={styles.navLink}>{t.nav.portfolio}</button></li>
+                    <li><button onClick={() => scrollToSection('contact')} className={styles.navLink}>{t.nav.contact}</button></li>
+                    <li><LanguageSwitcher /></li>
                 </ul>
 
                 <button className={styles.mobileMenuBtn}>⋮</button>

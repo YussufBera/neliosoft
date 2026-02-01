@@ -4,12 +4,15 @@ import React from "react";
 import { motion } from "framer-motion";
 import styles from "./About.module.css";
 import { Sparkles, Zap, DollarSign } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function About() {
+    const { t } = useLanguage();
+
     const features = [
-        { icon: <Sparkles size={28} />, label: "Creativity" },
-        { icon: <Zap size={28} />, label: "Innovation" },
-        { icon: <DollarSign size={28} />, label: "Affordability" },
+        { icon: <Sparkles size={28} />, label: t.about.creativity },
+        { icon: <Zap size={28} />, label: t.about.innovation },
+        { icon: <DollarSign size={28} />, label: t.about.affordability },
     ];
 
     return (
@@ -22,7 +25,7 @@ export default function About() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.5 }}
                 >
-                    Who We Are
+                    {t.about.title}
                 </motion.h2>
 
                 <motion.p
@@ -32,13 +35,13 @@ export default function About() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: 0.2 }}
                 >
-                    We are a group of passionate <span className={styles.highlight}>university students</span> focused on designing and developing modern, fast, and user-friendly websites for businesses. We bring fresh perspectives and the latest technologies to help you grow online.
+                    {t.about.description}
                 </motion.p>
 
                 <div className={styles.features}>
                     {features.map((feature, index) => (
                         <motion.div
-                            key={feature.label}
+                            key={index} // Changed key to index as label changes
                             className={styles.feature}
                             initial={{ opacity: 0, scale: 0.8 }}
                             whileInView={{ opacity: 1, scale: 1 }}

@@ -5,8 +5,11 @@ import { motion, Variants } from "framer-motion";
 import styles from "./Hero.module.css";
 import { ArrowRight, Mail } from "lucide-react";
 import Image from "next/image";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Hero() {
+    const { t } = useLanguage();
+
     const containerVariants: Variants = {
         hidden: { opacity: 0 },
         visible: {
@@ -74,19 +77,19 @@ export default function Hero() {
                 </motion.div>
 
                 <motion.h1 className={styles.title} variants={itemVariants}>
-                    We Build <span className="gradient-text">Smart Digital Solutions</span> for Businesses
+                    {t.hero.title_prefix} <span className="gradient-text">{t.hero.title_highlight}</span> {t.hero.title_suffix}
                 </motion.h1>
 
                 <motion.p className={styles.subtitle} variants={itemVariants}>
-                    NelioSoft is a team of university students creating modern websites and online solutions for growing businesses.
+                    {t.hero.subtitle}
                 </motion.p>
 
                 <motion.div className={styles.actions} variants={itemVariants}>
                     <button className={styles.buttonPrimary} onClick={() => document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' })}>
-                        View Our Work
+                        {t.hero.view_work}
                     </button>
                     <button className={styles.buttonSecondary} onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>
-                        Contact Us
+                        {t.hero.contact_us}
                     </button>
                 </motion.div>
 
@@ -99,7 +102,7 @@ export default function Hero() {
                         y: { repeat: Infinity, duration: 1.5, ease: "easeInOut" }
                     }}
                 >
-                    <span className={styles.scrollText}>Scroll Down</span>
+                    <span className={styles.scrollText}>{t.hero.scroll_down}</span>
                     <div className={styles.mouseIcon}>
                         <div className={styles.wheel}></div>
                     </div>

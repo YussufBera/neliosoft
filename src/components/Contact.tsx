@@ -4,8 +4,11 @@ import React from "react";
 import { motion } from "framer-motion";
 import styles from "./Contact.module.css";
 import { Mail, Instagram } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Contact() {
+    const { t } = useLanguage();
+
     return (
         <section className={styles.contact} id="contact">
             <div className={styles.container}>
@@ -17,7 +20,7 @@ export default function Contact() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.5 }}
                     >
-                        Get in Touch
+                        {t.contact.title}
                     </motion.h2>
                     <motion.p
                         className={styles.subtitle}
@@ -26,7 +29,7 @@ export default function Contact() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: 0.1 }}
                     >
-                        Have a project in mind? Let's build something great together.
+                        {t.contact.subtitle}
                     </motion.p>
                 </div>
 
@@ -57,11 +60,11 @@ export default function Contact() {
                         onSubmit={(e) => e.preventDefault()}
                     >
                         <div className={styles.inputGroup}>
-                            <input type="text" placeholder="Name" className={styles.input} required />
-                            <input type="email" placeholder="Email" className={styles.input} required />
+                            <input type="text" placeholder={t.contact.name} className={styles.input} required />
+                            <input type="email" placeholder={t.contact.email} className={styles.input} required />
                         </div>
-                        <textarea placeholder="Message" className={styles.textarea} required></textarea>
-                        <button type="submit" className={styles.submitButton}>Send Message</button>
+                        <textarea placeholder={t.contact.message} className={styles.textarea} required></textarea>
+                        <button type="submit" className={styles.submitButton}>{t.contact.send}</button>
                     </motion.form>
                 </div>
             </div>
