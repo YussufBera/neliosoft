@@ -33,7 +33,7 @@ export default function Navbar() {
     };
 
     return (
-        <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
+        <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ""} ${isMobileMenuOpen ? styles.mobileOpen : ""}`}>
             <div className={styles.container}>
                 <Link href="/" className={styles.logo}>
                     <span className={styles.logoText}>NelioSoft</span>
