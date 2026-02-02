@@ -83,23 +83,44 @@ export default function Contact() {
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.95 }}
                                 transition={{ duration: 0.4, ease: "easeOut" }}
-                                className="w-full flex flex-col items-center justify-center p-12 bg-white rounded-3xl shadow-xl min-h-[400px] border border-slate-100 text-center"
+                                className="w-full p-12 bg-white rounded-3xl shadow-xl min-h-[400px] border border-slate-100"
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    textAlign: 'center'
+                                }}
                             >
-                                <div className="mb-6 flex justify-center w-full">
-                                    <div className="w-24 h-24 bg-blue-600 rounded-full flex items-center justify-center shadow-lg shadow-blue-500/30">
-                                        <CheckCircle className="text-white w-12 h-12" />
+                                <div style={{
+                                    marginBottom: '24px',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    width: '100%'
+                                }}>
+                                    <div style={{
+                                        width: '96px',
+                                        height: '96px',
+                                        backgroundColor: '#2563eb', // Brand Blue
+                                        borderRadius: '50%',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        boxShadow: '0 10px 15px -3px rgba(37, 99, 235, 0.3)'
+                                    }}>
+                                        <CheckCircle style={{ color: 'white', width: '48px', height: '48px' }} />
                                     </div>
                                 </div>
 
-                                <h3 className="text-3xl font-bold text-slate-800 mb-3 w-full text-center">
+                                <h3 className="text-3xl font-bold text-slate-800 mb-3" style={{ width: '100%', textAlign: 'center' }}>
                                     {t.contact.success_title}
                                 </h3>
 
-                                <p className="text-slate-500 max-w-sm leading-relaxed mb-8 mx-auto w-full text-center">
+                                <p className="text-slate-500 max-w-sm leading-relaxed mb-8 mx-auto" style={{ width: '100%', textAlign: 'center' }}>
                                     {t.contact.success_message}
                                 </p>
 
-                                <div className="w-full flex justify-center">
+                                <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
                                     <button
                                         onClick={() => setStatus('idle')}
                                         className={styles.submitButton}
