@@ -72,39 +72,46 @@ export default function Contact() {
                         {status === 'success' ? (
                             <motion.div
                                 key="success"
-                                initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                                animate={{ opacity: 1, scale: 1, y: 0 }}
-                                exit={{ opacity: 0, scale: 0.9, y: -20 }}
-                                transition={{ type: "spring", duration: 0.6 }}
-                                className="w-full flex flex-col items-center justify-center p-12 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-2xl rounded-3xl border border-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] min-h-[400px]"
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.8 }}
+                                transition={{ type: "spring", bounce: 0.5 }}
+                                className="w-full flex flex-col items-center justify-center p-12 bg-white rounded-3xl shadow-xl min-h-[400px] border border-slate-100"
                             >
                                 <motion.div
-                                    initial={{ scale: 0, rotate: -45 }}
-                                    animate={{ scale: 1, rotate: 0 }}
-                                    transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.1 }}
-                                    className="relative mb-6"
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    transition={{
+                                        type: "spring",
+                                        stiffness: 260,
+                                        damping: 20,
+                                        delay: 0.1
+                                    }}
+                                    className="relative mb-8"
                                 >
-                                    <div className="absolute inset-0 bg-green-500/20 blur-xl rounded-full" />
-                                    <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <circle cx="50" cy="50" r="45" stroke="#22c55e" strokeWidth="4" className="opacity-20" />
-                                        <motion.path
-                                            d="M30 52 L45 67 L75 37"
-                                            stroke="#22c55e"
-                                            strokeWidth="6"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            initial={{ pathLength: 0 }}
-                                            animate={{ pathLength: 1 }}
-                                            transition={{ duration: 0.5, delay: 0.4, ease: "easeOut" }}
-                                        />
-                                    </svg>
+                                    {/* Ripple Effect */}
+                                    <motion.div
+                                        initial={{ opacity: 0, scale: 0.5 }}
+                                        animate={{ opacity: 0, scale: 2 }}
+                                        transition={{
+                                            duration: 1.5,
+                                            repeat: Infinity,
+                                            delay: 0.5
+                                        }}
+                                        className="absolute inset-0 bg-blue-500 rounded-full blur-xl opacity-20"
+                                    />
+
+                                    {/* Modern Gradient Checkmark */}
+                                    <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
+                                        <CheckCircle className="text-white w-12 h-12" strokeWidth={3} />
+                                    </div>
                                 </motion.div>
 
                                 <motion.h3
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.5 }}
-                                    className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-emerald-600 mb-3 text-center"
+                                    transition={{ delay: 0.3 }}
+                                    className="text-3xl font-bold text-slate-800 mb-3 text-center"
                                 >
                                     {t.contact.success_title}
                                 </motion.h3>
@@ -112,8 +119,8 @@ export default function Contact() {
                                 <motion.p
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
-                                    transition={{ delay: 0.7 }}
-                                    className="text-slate-300 text-center max-w-xs leading-relaxed mb-8"
+                                    transition={{ delay: 0.4 }}
+                                    className="text-slate-500 text-center max-w-sm leading-relaxed mb-8"
                                 >
                                     {t.contact.success_message}
                                 </motion.p>
@@ -121,11 +128,12 @@ export default function Contact() {
                                 <motion.button
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.9 }}
+                                    transition={{ delay: 0.5 }}
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
                                     onClick={() => setStatus('idle')}
-                                    className="px-8 py-3 bg-white text-black font-semibold rounded-full shadow-lg hover:shadow-green-500/20 transition-all duration-300 transform"
+                                    className={styles.submitButton}
+                                    style={{ alignSelf: 'center', marginTop: '10px' }}
                                 >
                                     {t.contact.send_new}
                                 </motion.button>
