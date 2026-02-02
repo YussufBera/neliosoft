@@ -9,15 +9,18 @@ export default function LanguageSwitcher() {
     const languages: Language[] = ['DE', 'EN', 'TR', 'KU'];
 
     return (
-        <div className="flex items-center gap-6 ml-4">
-            {languages.map((lang) => (
+        <div className="flex items-center ml-6">
+            {languages.map((lang, index) => (
                 <button
                     key={lang}
                     onClick={() => setLanguage(lang)}
-                    className={`text-sm font-bold tracking-widest transition-colors duration-200 outline-none
+                    // Using explicit margins and a fixed width to ensure perfect alignment and spacing
+                    className={`
+            text-xs font-bold tracking-[0.15em] transition-all duration-300 outline-none
+            ${index !== languages.length - 1 ? 'mr-6' : ''} /* explicit margin right for gap */
             ${language === lang
-                            ? 'text-[#06b6d4]' /* Cyan-500: Closest readable match to reference on light bg */
-                            : 'text-gray-400 hover:text-gray-600'
+                            ? 'text-[#06b6d4] scale-110 drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]'
+                            : 'text-slate-400 hover:text-slate-600'
                         }
           `}
                 >
