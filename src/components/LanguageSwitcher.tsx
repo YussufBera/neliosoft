@@ -22,7 +22,10 @@ export default function LanguageSwitcher() {
                             : 'text-gray-400 hover:text-gray-600'
                         }
           `}
-                    style={{ letterSpacing: '0.1em' }}
+                    style={{
+                        letterSpacing: '0.1em',
+                        color: language === lang ? '#2563eb' : '#94a3b8' // Force Brand Blue vs Slate-400
+                    }}
                 >
                     {lang}
                 </button>

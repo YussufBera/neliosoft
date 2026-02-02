@@ -11,30 +11,30 @@ export default function PageTransition() {
     // Trigger transition when language changes
     useEffect(() => {
         setIsTransitioning(true);
-        const timer = setTimeout(() => setIsTransitioning(false), 800); // Duration of the "reload" effect
+        const timer = setTimeout(() => setIsTransitioning(false), 1000); // Increased to 1s for visibility
         return () => clearTimeout(timer);
     }, [language]);
 
     return (
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
             {isTransitioning && (
                 <motion.div
-                    className="fixed inset-0 z-[9999] bg-white pointer-events-none flex items-center justify-center"
+                    key="page-transition-overlay"
+                    className="fixed inset-0 z-[9999] bg-white flex items-center justify-center pointer-events-auto"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.3, ease: "easeInOut" }}
                 >
-                    {/* Optional: Add a subtle loading indicator or logo pulse here if desired */}
                     <motion.div
                         initial={{ scale: 0.8, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: 1.2, opacity: 0 }}
+                        exit={{ scale: 1.1, opacity: 0 }}
                         transition={{ duration: 0.4 }}
                         className="flex flex-col items-center gap-4"
                     >
-                        {/* We can use the small icon logo or just a spinner */}
-                        <div className="w-12 h-12 rounded-full border-4 border-blue-500 border-t-transparent animate-spin" />
+                        {/* Spinner matching Brand Blue for consistency */}
+                        <div className="w-12 h-12 rounded-full border-4 border-[#2563eb] border-t-transparent animate-spin" />
                     </motion.div>
                 </motion.div>
             )}
