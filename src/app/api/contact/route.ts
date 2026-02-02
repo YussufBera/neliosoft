@@ -1,76 +1,62 @@
 import { NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
+import fs from 'fs';
+import path from 'path';
 
-// FORCE NODEJS RUNTIME (Essential for Nodemailer on Vercel)
+// Force usage of Node.js APIs for file system access
 export const runtime = 'nodejs';
 
 export async function POST(req: Request) {
-    let stage = 'Init';
     try {
         const { name, email, phone, countryCode, message } = await req.json();
 
-        stage = 'EnvCheck';
-        const user = process.env.GMAIL_USER;
-        const pass = process.env.GMAIL_PASS;
-
-        if (!user || !pass) {
-            return NextResponse.json({
-                error: 'Missing credentials',
-                details: `User: ${!!user ? 'Set' : 'Missing'}, Pass: ${!!pass ? 'Set' : 'Missing'}`
-            }, { status: 500 });
+        // Validate basic fields
+        if (!name || !email || !message) {
+            return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
         }
 
-        // Clean credentials (only remove whitespaces)
-        const cleanUser = user.trim();
-        const cleanPass = pass.replace(/\s+/g, '');
-
-        stage = 'TransporterCreate';
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: cleanUser,
-                pass: cleanPass,
-            },
-        });
-
-        // Verify connection (can be slow, but useful for debug)
-        stage = 'Verify';
-        await transporter.verify();
-
-        stage = 'Send';
-        const formattedPhone = countryCode && phone ? `${countryCode} ${phone}` : (phone || 'N/A');
-
-        const mailOptions = {
-            from: cleanUser,
-            to: 'infoneliosoft@gmail.com',
-            subject: `New Lead: ${name}`,
-            text: `
-Name: ${name}
-Email: ${email}
-Phone: ${formattedPhone}
-
-Message:
-${message}
-            `,
-            html: `
-<h3>New Lead Submission</h3>
-<p><strong>Name:</strong> ${name}</p>
-<p><strong>Email:</strong> ${email}</p>
-<p><strong>Phone:</strong> ${formattedPhone}</p>
-<hr/>
-<p><strong>Message:</strong></p>
-<p>${message.replace(/\n/g, '<br>')}</p>
-            `,
+        const newMessage = {
+            id: Date.now().toString(), // Simple unique ID
+            date: new Date().toISOString(),
+            name,
+            email,
+            phone: countryCode && phone ? `${countryCode} ${phone}` : (phone || 'N/A'),
+            message,
+            status: 'unread' // New messages are unread by default
         };
 
-        await transporter.sendMail(mailOptions);
+        // Define path to data file
+        const dataDir = path.join(process.cwd(), 'data');
+        const filePath = path.join(dataDir, 'messages.json');
 
-        return NextResponse.json({ success: true, message: 'Email sent' });
+        // Ensure directory exists
+        if (!fs.existsSync(dataDir)) {
+            fs.mkdirSync(dataDir, { recursive: true });
+        }
+
+        // Read existing messages
+        let messages = [];
+        if (fs.existsSync(filePath)) {
+            const fileContent = fs.readFileSync(filePath, 'utf-8');
+            try {
+                messages = JSON.parse(fileContent);
+            } catch (error) {
+                console.error("Error parsing messages file, resetting to empty array:", error);
+                messages = [];
+            }
+        }
+
+        // Add new message
+        messages.unshift(newMessage); // Add to beginning of array
+
+        // Save back to file
+        fs.writeFileSync(filePath, JSON.stringify(messages, null, 2));
+
+        return NextResponse.json({ success: true, message: 'Message saved successfully' });
     } catch (error: any) {
         console.error('API Error:', error);
         return NextResponse.json({
             error: 'Server Error',
-            details: `[Server] Stage: ${stage} | ${error.message}`
+            details: error.message
         }, { status: 500 });
     }
 }
