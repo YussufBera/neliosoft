@@ -2,66 +2,54 @@ import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
 export async function POST(req: Request) {
+    let stage = 'Init';
     try {
         const { name, email, message } = await req.json();
 
-        // 1. Validate Input
-        if (!name || !email || !message) {
-            console.error('Missing fields:', { name, email, message });
-            return NextResponse.json({ error: 'Missing fields' }, { status: 400 });
+        stage = 'EnvCheck';
+        const user = process.env.GMAIL_USER;
+        const pass = process.env.GMAIL_PASS;
+
+        if (!user || !pass) {
+            return NextResponse.json({
+                error: 'Missing credentials',
+                details: `User: ${!!user}, Pass: ${!!pass}`
+            }, { status: 500 });
         }
 
-        // 2. Validate Env Vars
-        if (!process.env.GMAIL_USER || !process.env.GMAIL_PASS) {
-            console.error('Missing GMAIL_USER or GMAIL_PASS env vars');
-            return NextResponse.json({ error: 'Server misconfiguration: Missing credentials' }, { status: 500 });
-        }
+        // Clean credentials
+        const cleanUser = user.trim();
+        const cleanPass = pass.replace(/[^a-zA-Z0-9]/g, ''); // Keep only alphanumeric, remove spaces/symbols
 
+        stage = 'TransporterCreate';
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: process.env.GMAIL_USER,
-                pass: process.env.GMAIL_PASS?.replace(/\s+/g, ''), // Fix spaces
+                user: cleanUser,
+                pass: cleanPass,
             },
         });
 
-        // 3. Verify Connection *Before* Sending
-        try {
-            await transporter.verify();
-            console.log('Nodemailer connection verified.');
-        } catch (verifyError) {
-            console.error('Nodemailer verification failed:', verifyError);
-            return NextResponse.json({ error: 'Failed to connect to Gmail', details: verifyError }, { status: 500 });
-        }
+        stage = 'Verify';
+        await transporter.verify();
 
+        stage = 'Send';
         const mailOptions = {
-            from: process.env.GMAIL_USER,
+            from: cleanUser,
             to: 'infoneliosoft@gmail.com',
-            subject: `New Contact Form Submission from ${name}`,
-            text: `
-Name: ${name}
-Email: ${email}
-Message:
-${message}
-            `,
-            html: `
-<h3>New Contact Form Submission</h3>
-<p><strong>Name:</strong> ${name}</p>
-<p><strong>Email:</strong> ${email}</p>
-<p><strong>Message:</strong></p>
-<p>${message.replace(/\n/g, '<br>')}</p>
-            `,
+            subject: `Contact: ${name}`,
+            text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
+            html: `<p>Name: ${name}</p><p>Email: ${email}</p><p>${message}</p>`,
         };
 
         await transporter.sendMail(mailOptions);
-        console.log(`Email sent successfully to infoneliosoft@gmail.com`);
 
-        return NextResponse.json({ success: true, message: 'Email sent successfully!' });
+        return NextResponse.json({ success: true, message: 'Email sent' });
     } catch (error: any) {
-        console.error('Error sending email:', error);
+        console.error('Error:', error);
         return NextResponse.json({
-            error: 'Failed to send email',
-            details: error.message || error.toString()
+            error: 'Failed',
+            details: `Stage: ${stage} | Error: ${error.message} | Name: ${error.name}`
         }, { status: 500 });
     }
 }
