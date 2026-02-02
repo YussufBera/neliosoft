@@ -84,15 +84,13 @@ export default function Contact() {
                                 transition={{ duration: 0.4, ease: "easeOut" }}
                                 className="w-full flex flex-col items-center justify-center p-12 bg-white rounded-3xl shadow-xl min-h-[400px] border border-slate-100 text-center"
                             >
-                                <div className="mb-6 relative flex items-center justify-center w-full">
-                                    <div className="w-20 h-20 bg-gradient-to-tr from-blue-600 to-purple-600 rounded-full flex items-center justify-center shadow-lg shadow-blue-500/30">
-                                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M20 6L9 17L4 12" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
+                                <div className="mb-6 flex justify-center w-full">
+                                    <div className="w-24 h-24 bg-blue-600 rounded-full flex items-center justify-center shadow-lg shadow-blue-500/30">
+                                        <CheckCircle className="text-white w-12 h-12" />
                                     </div>
                                 </div>
 
-                                <h3 className="text-3xl font-bold text-slate-800 mb-3 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 w-full text-center">
+                                <h3 className="text-3xl font-bold text-slate-800 mb-3 w-full text-center">
                                     {t.contact.success_title}
                                 </h3>
 
