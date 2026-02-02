@@ -8,6 +8,7 @@ import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const { t } = useLanguage();
 
     useEffect(() => {
@@ -23,7 +24,12 @@ export default function Navbar() {
         const element = document.getElementById(id);
         if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
+            setIsMobileMenuOpen(false); // Close menu on click
         }
+    };
+
+    const toggleMobileMenu = () => {
+        setIsMobileMenuOpen(!isMobileMenuOpen);
     };
 
     return (
@@ -33,8 +39,8 @@ export default function Navbar() {
                     <span className={styles.logoText}>NelioSoft</span>
                 </Link>
 
-                <ul className={styles.navLinks}>
-                    <li><button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className={styles.navLink}>{t.nav.home}</button></li>
+                <ul className={`${styles.navLinks} ${isMobileMenuOpen ? styles.active : ""}`}>
+                    <li><button onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); setIsMobileMenuOpen(false); }} className={styles.navLink}>{t.nav.home}</button></li>
                     <li><button onClick={() => scrollToSection('about')} className={styles.navLink}>{t.nav.about}</button></li>
                     <li><button onClick={() => scrollToSection('services')} className={styles.navLink}>{t.nav.services}</button></li>
                     <li><button onClick={() => scrollToSection('portfolio')} className={styles.navLink}>{t.nav.portfolio}</button></li>
@@ -42,7 +48,13 @@ export default function Navbar() {
                     <li><LanguageSwitcher /></li>
                 </ul>
 
-                <button className={styles.mobileMenuBtn}>⋮</button>
+                <button
+                    className={styles.mobileMenuBtn}
+                    onClick={toggleMobileMenu}
+                    aria-label="Toggle Menu"
+                >
+                    {isMobileMenuOpen ? '✕' : '⋮'}
+                </button>
             </div>
         </nav>
     );
