@@ -1,6 +1,14 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #6366f1;
+  --color-secondary: #a855f7;
+  --color-accent: #d946ef;
+
+  --font-outfit: "Outfit", system-ui, sans-serif;
+
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
 
 :root {
   /* Brand Colors */
@@ -8,16 +16,13 @@
   --foreground: #1a1a1a;
 
   --primary: #6366f1;
-  /* Indigo/Blue-ish */
   --primary-hover: #4f46e5;
   --primary-light: #eef2ff;
 
   --secondary: #a855f7;
-  /* Purple */
   --secondary-light: #f3e8ff;
 
   --accent: #d946ef;
-  /* Fuchsia for slight accents if needed */
 
   --text-primary: #1e293b;
   --text-secondary: #475569;
@@ -31,53 +36,23 @@
   --gradient-bg: linear-gradient(135deg, #f5f3ff 0%, #eff6ff 100%);
   --gradient-primary: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
   --gradient-text: linear-gradient(to right, #4f46e5, #9333ea);
-
-  /* Animation */
-  --transition-fast: 0.2s ease;
-  --transition-normal: 0.3s ease;
-  --transition-slow: 0.5s ease;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
   font-family: var(--font-outfit), system-ui, sans-serif;
-  background-color: var(--background);
-  color: var(--foreground);
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+@layer utilities {
+  .gradient-text {
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
 
-button {
-  cursor: pointer;
-  border: none;
-  background: none;
-  font-family: inherit;
-}
-
-/* Utilities */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-.gradient-text {
-  background: var(--gradient-text);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  .glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
 }
