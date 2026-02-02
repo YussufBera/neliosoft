@@ -7,7 +7,7 @@ export const runtime = 'nodejs';
 export async function POST(req: Request) {
     let stage = 'Init';
     try {
-        const { name, email, phone, domain, message } = await req.json();
+        const { name, email, phone, countryCode, message } = await req.json();
 
         stage = 'EnvCheck';
         const user = process.env.GMAIL_USER;
@@ -38,6 +38,8 @@ export async function POST(req: Request) {
         await transporter.verify();
 
         stage = 'Send';
+        const formattedPhone = countryCode && phone ? `${countryCode} ${phone}` : (phone || 'N/A');
+
         const mailOptions = {
             from: cleanUser,
             to: 'infoneliosoft@gmail.com',
@@ -45,8 +47,7 @@ export async function POST(req: Request) {
             text: `
 Name: ${name}
 Email: ${email}
-Phone: ${phone || 'N/A'}
-Domain: ${domain || 'N/A'}
+Phone: ${formattedPhone}
 
 Message:
 ${message}
@@ -55,8 +56,7 @@ ${message}
 <h3>New Lead Submission</h3>
 <p><strong>Name:</strong> ${name}</p>
 <p><strong>Email:</strong> ${email}</p>
-<p><strong>Phone:</strong> ${phone || 'N/A'}</p>
-<p><strong>Domain:</strong> ${domain || 'N/A'}</p>
+<p><strong>Phone:</strong> ${formattedPhone}</p>
 <hr/>
 <p><strong>Message:</strong></p>
 <p>${message.replace(/\n/g, '<br>')}</p>

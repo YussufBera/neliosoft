@@ -9,9 +9,19 @@ import { useLanguage } from "@/context/LanguageContext";
 export default function Contact() {
     const { t } = useLanguage();
     // Default form data
-    const [formData, setFormData] = useState({ name: "", email: "", phone: "", domain: "", message: "" });
+    const [formData, setFormData] = useState({ name: "", email: "", phone: "", countryCode: "+90", message: "" });
     const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
     const [errorMessage, setErrorMessage] = useState("");
+
+    const countryCodes = [
+        { code: "+90", label: "TR (+90)" },
+        { code: "+49", label: "DE (+49)" },
+        { code: "+44", label: "UK (+44)" },
+        { code: "+1", label: "US (+1)" },
+        { code: "+33", label: "FR (+33)" },
+        { code: "+31", label: "NL (+31)" },
+        { code: "+964", label: "IQ (+964)" },
+    ];
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -32,7 +42,7 @@ export default function Contact() {
 
             if (res.ok) {
                 setStatus('success');
-                setFormData({ name: "", email: "", phone: "", domain: "", message: "" });
+                setFormData({ name: "", email: "", phone: "", countryCode: "+90", message: "" });
             } else {
                 setStatus('error');
                 setErrorMessage(data.details || "[Server] Unknown Error");
@@ -98,9 +108,17 @@ export default function Contact() {
                                     <input type="email" placeholder={t.contact.email} className={styles.input} required value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
                                 </div>
 
-                                <div className={styles.inputGroup}>
+                                <div className={styles.inputGroup} style={{ gridTemplateColumns: "1fr 2fr" }}>
+                                    <select
+                                        className={styles.input}
+                                        value={formData.countryCode}
+                                        onChange={(e) => setFormData({ ...formData, countryCode: e.target.value })}
+                                    >
+                                        {countryCodes.map((c) => (
+                                            <option key={c.code} value={c.code}>{c.label}</option>
+                                        ))}
+                                    </select>
                                     <input type="tel" placeholder={t.contact.phone} className={styles.input} required value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} />
-                                    <input type="text" placeholder={t.contact.domain} className={styles.input} value={formData.domain} onChange={(e) => setFormData({ ...formData, domain: e.target.value })} />
                                 </div>
 
                                 <textarea placeholder={t.contact.message} className={styles.textarea} required value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })}></textarea>
