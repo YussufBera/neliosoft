@@ -9,6 +9,7 @@ import { useLanguage } from "@/context/LanguageContext";
 export default function Contact() {
     const { t } = useLanguage();
     // Default form data
+    // Force update for deployment sync
     const [formData, setFormData] = useState({ name: "", email: "", phone: "", countryCode: "+90", message: "" });
     const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
     const [errorMessage, setErrorMessage] = useState("");
