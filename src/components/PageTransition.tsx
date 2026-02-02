@@ -56,7 +56,7 @@ export default function PageTransition() {
                             animate={{ scale: [0, cloud.scale, cloud.scale * 1.2], opacity: [0, 1, 1] }}
                             exit={{ scale: cloud.scale * 1.5, opacity: 0 }}
                             transition={{
-                                duration: 0.8,
+                                duration: 1.5,
                                 ease: [0.22, 1, 0.36, 1], // Custom bloom ease
                                 delay: cloud.delay
                             }}
