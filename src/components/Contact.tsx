@@ -45,19 +45,15 @@ export default function Contact() {
                 setStatus('success');
                 setFormData({ name: "", email: "", phone: "", countryCode: "+90", message: "" });
             } else {
-                // FALLBACK: If API fails, use mailto
+                // FALLBACK: Just show error state but NO mailto popup
+                setErrorMessage("Something went wrong. Please try again.");
                 setStatus('error');
-                const mailtoLink = `mailto:infoneliosoft@gmail.com?subject=Contact from ${formData.name}&body=${encodeURIComponent(formData.message + "\n\nFrom: " + formData.email)}`;
-                window.open(mailtoLink, '_blank');
-                setTimeout(() => setStatus('idle'), 5000);
             }
         } catch (error: any) {
             console.error(error);
-            // FALLBACK: If Network fails, use mailto
+            // FALLBACK: Just show error state but NO mailto popup
+            setErrorMessage("Connection failed. Please check your internet.");
             setStatus('error');
-            const mailtoLink = `mailto:infoneliosoft@gmail.com?subject=Contact from ${formData.name}&body=${encodeURIComponent(formData.message + "\n\nFrom: " + formData.email)}`;
-            window.open(mailtoLink, '_blank');
-            setTimeout(() => setStatus('idle'), 5000);
         }
     };
 
