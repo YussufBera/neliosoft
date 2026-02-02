@@ -1,22 +1,22 @@
 import { NextResponse } from 'next/server';
-import { sql } from '@vercel/postgres';
+import pool from '@/lib/db';
+
+export const runtime = 'nodejs';
 
 export async function POST(req: Request) {
     try {
         const { name, email, phone, countryCode, message } = await req.json();
 
-        // Validate basic fields
         if (!name || !email || !message) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
         }
 
         const fullPhone = countryCode && phone ? `${countryCode} ${phone}` : (phone || 'N/A');
 
-        // Insert into Postgres
-        await sql`
-            INSERT INTO messages (name, email, phone, message, date)
-            VALUES (${name}, ${email}, ${fullPhone}, ${message}, NOW());
-        `;
+        await pool.query(
+            'INSERT INTO messages (name, email, phone, message, date) VALUES ($1, $2, $3, $4, NOW())',
+            [name, email, fullPhone, message]
+        );
 
         return NextResponse.json({ success: true, message: 'Message saved successfully' });
     } catch (error: any) {

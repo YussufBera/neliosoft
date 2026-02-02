@@ -1,16 +1,16 @@
 import { NextResponse } from 'next/server';
-import { sql } from '@vercel/postgres';
+import pool from '@/lib/db';
 
-export const dynamic = 'force-dynamic'; // Ensure no caching
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
     try {
-        const { rows } = await sql`SELECT * FROM messages ORDER BY date DESC`;
-        return NextResponse.json(rows);
+        const result = await pool.query('SELECT * FROM messages ORDER BY date DESC');
+        return NextResponse.json(result.rows);
     } catch (error: any) {
         console.error('API Admin Error:', error);
-        // If table doesn't exist yet, return empty array gracefully
-        if (error.message.includes('relation "messages" does not exist')) {
+        if (error?.code === '42P01' || error.message.includes('does not exist')) {
             return NextResponse.json([]);
         }
         return NextResponse.json({ error: 'Failed to fetch messages' }, { status: 500 });

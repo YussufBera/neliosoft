@@ -1,9 +1,11 @@
-import { sql } from '@vercel/postgres';
 import { NextResponse } from 'next/server';
+import pool from '@/lib/db';
+
+export const runtime = 'nodejs';
 
 export async function GET(request: Request) {
-    try {
-        const result = await sql`
+  try {
+    const result = await pool.query(`
       CREATE TABLE IF NOT EXISTS messages (
         id SERIAL PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
@@ -13,9 +15,9 @@ export async function GET(request: Request) {
         date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         status VARCHAR(20) DEFAULT 'unread'
       );
-    `;
-        return NextResponse.json({ result }, { status: 200 });
-    } catch (error) {
-        return NextResponse.json({ error }, { status: 500 });
-    }
+    `);
+    return NextResponse.json({ result }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ error }, { status: 500 });
+  }
 }
