@@ -44,13 +44,19 @@ export default function Contact() {
                 setStatus('success');
                 setFormData({ name: "", email: "", phone: "", countryCode: "+90", message: "" });
             } else {
+                // FALLBACK: If API fails, use mailto
                 setStatus('error');
-                setErrorMessage(data.details || "[Server] Unknown Error");
+                const mailtoLink = `mailto:infoneliosoft@gmail.com?subject=Contact from ${formData.name}&body=${encodeURIComponent(formData.message + "\n\nFrom: " + formData.email)}`;
+                window.open(mailtoLink, '_blank');
+                setTimeout(() => setStatus('idle'), 5000);
             }
         } catch (error: any) {
             console.error(error);
+            // FALLBACK: If Network fails, use mailto
             setStatus('error');
-            setErrorMessage(`[Client] ${error.message || "Network Error"}`);
+            const mailtoLink = `mailto:infoneliosoft@gmail.com?subject=Contact from ${formData.name}&body=${encodeURIComponent(formData.message + "\n\nFrom: " + formData.email)}`;
+            window.open(mailtoLink, '_blank');
+            setTimeout(() => setStatus('idle'), 5000);
         }
     };
 
@@ -72,71 +78,37 @@ export default function Contact() {
                         {status === 'success' ? (
                             <motion.div
                                 key="success"
-                                initial={{ opacity: 0, scale: 0.8 }}
+                                initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.8 }}
-                                transition={{ type: "spring", bounce: 0.5 }}
-                                className="w-full flex flex-col items-center justify-center p-12 bg-white rounded-3xl shadow-xl min-h-[400px] border border-slate-100"
+                                exit={{ opacity: 0, scale: 0.95 }}
+                                transition={{ duration: 0.4, ease: "easeOut" }}
+                                className="w-full flex flex-col items-center justify-center p-12 bg-white rounded-3xl shadow-xl min-h-[400px] border border-slate-100 text-center"
                             >
-                                <motion.div
-                                    initial={{ scale: 0 }}
-                                    animate={{ scale: 1 }}
-                                    transition={{
-                                        type: "spring",
-                                        stiffness: 260,
-                                        damping: 20,
-                                        delay: 0.1
-                                    }}
-                                    className="relative mb-8"
-                                >
-                                    {/* Ripple Effect */}
-                                    <motion.div
-                                        initial={{ opacity: 0, scale: 0.5 }}
-                                        animate={{ opacity: 0, scale: 2 }}
-                                        transition={{
-                                            duration: 1.5,
-                                            repeat: Infinity,
-                                            delay: 0.5
-                                        }}
-                                        className="absolute inset-0 bg-blue-500 rounded-full blur-xl opacity-20"
-                                    />
-
-                                    {/* Modern Gradient Checkmark */}
-                                    <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
-                                        <CheckCircle className="text-white w-12 h-12" strokeWidth={3} />
+                                <div className="mb-6 relative flex items-center justify-center w-full">
+                                    <div className="w-20 h-20 bg-gradient-to-tr from-blue-600 to-purple-600 rounded-full flex items-center justify-center shadow-lg shadow-blue-500/30">
+                                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M20 6L9 17L4 12" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                                        </svg>
                                     </div>
-                                </motion.div>
+                                </div>
 
-                                <motion.h3
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.3 }}
-                                    className="text-3xl font-bold text-slate-800 mb-3 text-center"
-                                >
+                                <h3 className="text-3xl font-bold text-slate-800 mb-3 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 w-full text-center">
                                     {t.contact.success_title}
-                                </motion.h3>
+                                </h3>
 
-                                <motion.p
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ delay: 0.4 }}
-                                    className="text-slate-500 text-center max-w-sm leading-relaxed mb-8"
-                                >
+                                <p className="text-slate-500 max-w-sm leading-relaxed mb-8 mx-auto w-full text-center">
                                     {t.contact.success_message}
-                                </motion.p>
+                                </p>
 
-                                <motion.button
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.5 }}
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    onClick={() => setStatus('idle')}
-                                    className={styles.submitButton}
-                                    style={{ alignSelf: 'center', marginTop: '10px' }}
-                                >
-                                    {t.contact.send_new}
-                                </motion.button>
+                                <div className="w-full flex justify-center">
+                                    <button
+                                        onClick={() => setStatus('idle')}
+                                        className={styles.submitButton}
+                                        style={{ margin: '0' }}
+                                    >
+                                        {t.contact.send_new}
+                                    </button>
+                                </div>
                             </motion.div>
                         ) : (
                             <motion.form
