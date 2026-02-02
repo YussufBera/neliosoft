@@ -3,7 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import styles from "./WhyChooseUs.module.css";
-import { CheckCircle, Clock, DollarSign, Code2, Smartphone } from "lucide-react";
+import { CheckCircle, Clock, DollarSign, Code2, Smartphone, Search, Headphones, Shield } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function WhyChooseUs() {
@@ -15,6 +15,9 @@ export default function WhyChooseUs() {
         { icon: <DollarSign size={40} />, title: t.why_choose.affordable, desc: t.why_choose.affordable_desc },
         { icon: <CheckCircle size={40} />, title: t.why_choose.clean_code, desc: t.why_choose.clean_desc },
         { icon: <Smartphone size={40} />, title: t.why_choose.mobile_first, desc: t.why_choose.mobile_desc },
+        { icon: <Search size={40} />, title: t.why_choose.seo_optimized, desc: t.why_choose.seo_desc },
+        { icon: <Headphones size={40} />, title: t.why_choose.support, desc: t.why_choose.support_desc },
+        { icon: <Shield size={40} />, title: t.why_choose.security, desc: t.why_choose.security_desc },
     ];
 
     return (
