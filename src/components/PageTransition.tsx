@@ -8,6 +8,7 @@ export default function PageTransition() {
     const { language } = useLanguage();
     const [isTransitioning, setIsTransitioning] = useState(false);
     const [mounted, setMounted] = useState(false);
+    const firstRender = React.useRef(true);
 
     useEffect(() => {
         setMounted(true);
@@ -17,7 +18,13 @@ export default function PageTransition() {
     // Trigger transition when language changes
     useEffect(() => {
         if (!mounted) {
-            console.log("PageTransition skipping trigger: Not mounted yet.");
+            return;
+        }
+
+        // Skip the very first language set (initial load)
+        if (firstRender.current) {
+            console.log("PageTransition skipping initial render.");
+            firstRender.current = false;
             return;
         }
 
@@ -26,7 +33,7 @@ export default function PageTransition() {
         const timer = setTimeout(() => {
             console.log("PageTransition completing.");
             setIsTransitioning(false);
-        }, 1400);
+        }, 1400); // Keep timing consistent with old one but cleaner UI
         return () => clearTimeout(timer);
     }, [language, mounted]);
 
@@ -41,7 +48,7 @@ export default function PageTransition() {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="fixed inset-0 bg-white/80 backdrop-blur-sm z-[100000] pointer-events-none flex items-center justify-center"
+                    className="fixed inset-0 bg-white z-[100000] pointer-events-none flex items-center justify-center"
                 >
                     <div className="w-8 h-8 border-2 border-blue-600/30 border-t-blue-600 rounded-full animate-spin" />
                 </motion.div>
