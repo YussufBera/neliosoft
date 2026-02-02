@@ -18,7 +18,7 @@ export default function LanguageSwitcher() {
                     className={`
             text-sm font-bold tracking-widest transition-all duration-300 outline-none
             ${language === lang
-                            ? 'text-[#06b6d4] scale-110 drop-shadow-[0_0_10px_rgba(6,182,212,0.4)]'
+                            ? 'text-[#2563eb] scale-110 drop-shadow-[0_0_10px_rgba(37,99,235,0.4)]'
                             : 'text-gray-400 hover:text-gray-600'
                         }
           `}
