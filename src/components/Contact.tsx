@@ -127,7 +127,7 @@ export default function Contact() {
                                     onClick={() => setStatus('idle')}
                                     className="px-8 py-3 bg-white text-black font-semibold rounded-full shadow-lg hover:shadow-green-500/20 transition-all duration-300 transform"
                                 >
-                                    Tamam / Done
+                                    {t.contact.send_new}
                                 </motion.button>
                             </motion.div>
                         ) : (
