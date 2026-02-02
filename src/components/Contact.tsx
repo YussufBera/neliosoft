@@ -101,12 +101,12 @@ export default function Contact() {
                                     <div style={{
                                         width: '96px',
                                         height: '96px',
-                                        backgroundColor: '#2563eb', // Brand Blue
+                                        background: 'linear-gradient(135deg, #2563eb 0%, #9333ea 100%)', // Blue to Purple Gradient
                                         borderRadius: '50%',
                                         display: 'flex',
                                         alignItems: 'center',
                                         justifyContent: 'center',
-                                        boxShadow: '0 10px 15px -3px rgba(37, 99, 235, 0.3)'
+                                        boxShadow: '0 10px 25px -5px rgba(37, 99, 235, 0.4)'
                                     }}>
                                         <CheckCircle style={{ color: 'white', width: '48px', height: '48px' }} />
                                     </div>
@@ -120,7 +120,7 @@ export default function Contact() {
                                     {t.contact.success_message}
                                 </p>
 
-                                <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                                <div style={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: '32px' }}>
                                     <button
                                         onClick={() => setStatus('idle')}
                                         className={styles.submitButton}
