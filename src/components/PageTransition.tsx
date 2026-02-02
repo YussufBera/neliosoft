@@ -4,7 +4,12 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
 
-// Reliable "Blue Wipe" Page Transition
+/**
+ * CodyHouse-style "Curtain" Transition
+ * - Two panels (Top & Bottom) slide in to meet at the center.
+ * - A progress bar scales horizontally in the middle.
+ * - The panels slide away to reveal content.
+ */
 export default function PageTransition() {
     const { language } = useLanguage();
     const [isTransitioning, setIsTransitioning] = useState(false);
@@ -16,10 +21,11 @@ export default function PageTransition() {
 
     // Trigger transition when language changes
     useEffect(() => {
-        if (!mounted) return; // Skip on initial hydration if desired, or keep it to show "loading"
+        if (!mounted) return;
 
         setIsTransitioning(true);
-        const timer = setTimeout(() => setIsTransitioning(false), 1200); // 1.2s duration
+        // Duration: In (0.4s) + Stay (0.6s) + Out (0.4s) = 1.4s total safety buffer
+        const timer = setTimeout(() => setIsTransitioning(false), 1400);
         return () => clearTimeout(timer);
     }, [language, mounted]);
 
@@ -28,27 +34,43 @@ export default function PageTransition() {
     return (
         <AnimatePresence mode="wait">
             {isTransitioning && (
-                <motion.div
-                    key="page-loader"
-                    initial={{ scaleY: 0 }}
-                    animate={{ scaleY: 1 }}
-                    exit={{ scaleY: 0 }}
-                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }} // Custom easing
-                    style={{ originY: isTransitioning ? 0 : 1 }} // Expand from top, shrink to bottom
-                    className="fixed inset-0 z-[100000] bg-[#2563eb] flex items-center justify-center pointer-events-auto"
-                >
+                <>
+                    {/* Top Top Curtain */}
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.5 }}
-                        transition={{ delay: 0.1 }}
-                        className="flex flex-col items-center gap-4"
+                        key="curtain-top"
+                        initial={{ y: "-100%" }}
+                        animate={{ y: "0%" }}
+                        exit={{ y: "-100%" }} // Slide back up
+                        transition={{ duration: 0.5, ease: [0.77, 0, 0.175, 1] }} // Quartic-like ease
+                        className="fixed top-0 left-0 w-full h-1/2 bg-[#2563eb] z-[100000] pointer-events-auto"
+                    />
+
+                    {/* Bottom Curtain */}
+                    <motion.div
+                        key="curtain-bottom"
+                        initial={{ y: "100%" }}
+                        animate={{ y: "0%" }}
+                        exit={{ y: "100%" }} // Slide back down
+                        transition={{ duration: 0.5, ease: [0.77, 0, 0.175, 1] }}
+                        className="fixed bottom-0 left-0 w-full h-1/2 bg-[#2563eb] z-[100000] pointer-events-auto"
+                    />
+
+                    {/* Loading Bar (Centered) */}
+                    <motion.div
+                        key="loading-bar"
+                        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-1 bg-white/30 rounded-full z-[100001] pointer-events-none overflow-hidden"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1, transition: { delay: 0.2 } }}
+                        exit={{ opacity: 0 }}
                     >
-                        {/* White logo/spinner for contrast on blue */}
-                        <div className="w-16 h-16 border-4 border-white/30 border-t-white rounded-full animate-spin" />
-                        <span className="text-white font-bold tracking-[0.2em] text-lg animate-pulse">LOADING</span>
+                        <motion.div
+                            className="h-full bg-white"
+                            initial={{ width: "0%" }}
+                            animate={{ width: "100%" }}
+                            transition={{ duration: 0.8, ease: "easeInOut", delay: 0.3 }}
+                        />
                     </motion.div>
-                </motion.div>
+                </>
             )}
         </AnimatePresence>
     );
