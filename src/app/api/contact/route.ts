@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
+// FORCE NODEJS RUNTIME (Essential for Nodemailer on Vercel)
+export const runtime = 'nodejs';
+
 export async function POST(req: Request) {
     let stage = 'Init';
     try {
@@ -13,13 +16,13 @@ export async function POST(req: Request) {
         if (!user || !pass) {
             return NextResponse.json({
                 error: 'Missing credentials',
-                details: `User: ${!!user}, Pass: ${!!pass}`
+                details: `User: ${!!user ? 'Set' : 'Missing'}, Pass: ${!!pass ? 'Set' : 'Missing'}`
             }, { status: 500 });
         }
 
-        // Clean credentials
+        // Clean credentials (only remove whitespaces)
         const cleanUser = user.trim();
-        const cleanPass = pass.replace(/[^a-zA-Z0-9]/g, ''); // Keep only alphanumeric, remove spaces/symbols
+        const cleanPass = pass.replace(/\s+/g, '');
 
         stage = 'TransporterCreate';
         const transporter = nodemailer.createTransport({
@@ -30,6 +33,7 @@ export async function POST(req: Request) {
             },
         });
 
+        // Verify connection (can be slow, but useful for debug)
         stage = 'Verify';
         await transporter.verify();
 
@@ -46,10 +50,10 @@ export async function POST(req: Request) {
 
         return NextResponse.json({ success: true, message: 'Email sent' });
     } catch (error: any) {
-        console.error('Error:', error);
+        console.error('API Error:', error);
         return NextResponse.json({
-            error: 'Failed',
-            details: `Stage: ${stage} | Error: ${error.message} | Name: ${error.name}`
+            error: 'Server Error',
+            details: `[Server] Stage: ${stage} | ${error.message}`
         }, { status: 500 });
     }
 }

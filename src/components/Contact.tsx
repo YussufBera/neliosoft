@@ -32,13 +32,13 @@ export default function Contact() {
                 setTimeout(() => setStatus('idle'), 5000);
             } else {
                 setStatus('error');
-                setErrorMessage(data.details || data.error || "Something went wrong");
+                setErrorMessage(data.details || "[Server] Unknown Error");
                 setTimeout(() => setStatus('idle'), 5000);
             }
         } catch (error: any) {
             console.error(error);
             setStatus('error');
-            setErrorMessage(error.message || "Network Error");
+            setErrorMessage(`[Client] ${error.message || "Network Error"}`);
             setTimeout(() => setStatus('idle'), 5000);
         }
     };
