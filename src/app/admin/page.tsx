@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Lock, Mail, Phone, Calendar, User } from 'lucide-react';
+import { Lock, Mail, Phone, Calendar, User, Trash2 } from 'lucide-react';
 
 export default function AdminPage() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -9,6 +9,7 @@ export default function AdminPage() {
     const [messages, setMessages] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [deletingId, setDeletingId] = useState<string | null>(null);
 
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
@@ -30,6 +31,30 @@ export default function AdminPage() {
             console.error(err);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleDelete = async (id: string) => {
+        if (!confirm('Bu mesajı silmek istediğinize emin misiniz?')) return;
+
+        setDeletingId(id);
+        try {
+            const res = await fetch(`/api/admin/messages/${id}`, {
+                method: 'DELETE',
+            });
+
+            if (res.ok) {
+                // Remove from local state immediately for instant feedback
+                setMessages(prev => prev.filter(msg => msg.id.toString() !== id.toString()));
+            } else {
+                const data = await res.json();
+                alert('Silme başarısız: ' + (data.error || 'Bilinmeyen hata'));
+            }
+        } catch (err) {
+            console.error(err);
+            alert('Silme sırasında bağlantı hatası oluştu.');
+        } finally {
+            setDeletingId(null);
         }
     };
 
@@ -91,8 +116,22 @@ export default function AdminPage() {
                 ) : (
                     <div className="grid gap-6">
                         {messages.map((msg: any) => (
-                            <div key={msg.id} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
-                                <div className="flex flex-col md:flex-row justify-between md:items-start gap-4 mb-4 pb-4 border-b border-slate-50">
+                            <div key={msg.id} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow relative group">
+                                <div className="absolute top-6 right-6">
+                                    <button
+                                        onClick={() => handleDelete(msg.id)}
+                                        disabled={deletingId === msg.id}
+                                        className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                                        title="Mesajı Sil"
+                                    >
+                                        {deletingId === msg.id ? (
+                                            <div className="w-5 h-5 border-2 border-red-500/30 border-t-red-500 rounded-full animate-spin" />
+                                        ) : (
+                                            <Trash2 size={20} />
+                                        )}
+                                    </button>
+                                </div>
+                                <div className="flex flex-col md:flex-row justify-between md:items-start gap-4 mb-4 pb-4 border-b border-slate-50 mr-12">
                                     <div className="flex items-center gap-3">
                                         <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center text-blue-600 font-bold">
                                             {msg.name.charAt(0).toUpperCase()}
