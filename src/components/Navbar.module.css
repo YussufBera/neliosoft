@@ -87,6 +87,42 @@
 }
 
 @media (max-width: 768px) {
+
+    /* Reset Navbar for Mobile to be full width and top aligned */
+    .navbar {
+        top: 0;
+        left: 0;
+        transform: none;
+        width: 100%;
+        max-width: 100%;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+        border-top: none;
+        padding: 15px 24px;
+        /* Adjust padding for mobile */
+    }
+
+    .scrolled {
+        top: 0;
+        /* Keep top 0 when scrolled */
+        padding: 15px 24px;
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .navbar.mobileOpen {
+        background: transparent;
+        box-shadow: none;
+        border-bottom: none;
+    }
+
+    /* Adjust container in open state to sit on top of overlay */
+    .mobileOpen .container {
+        position: relative;
+        z-index: 1002;
+    }
+
     .navLinks {
         position: fixed;
         top: 0;
@@ -102,14 +138,18 @@
         gap: 40px;
         transform: translateY(-100%);
         transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        z-index: -1;
-        /* Behind the header container but visible when active */
+        z-index: 999;
+        /* Just below the navbar container content */
+        margin: 0;
+        padding: 0;
+        pointer-events: none;
+        /* Disable clicks when closed */
     }
 
     .navLinks.active {
         display: flex;
-        /* Override display: none */
         transform: translateY(0);
+        pointer-events: auto;
     }
 
     .navLink {
@@ -120,8 +160,7 @@
 
     .mobileMenuBtn {
         display: block;
-        z-index: 1001;
-        /* Ensure button stays on top */
+        z-index: 1002;
         position: relative;
         width: 40px;
         height: 40px;
