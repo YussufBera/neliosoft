@@ -4,16 +4,19 @@ import React from "react";
 import { motion } from "framer-motion";
 import styles from "./WhyChooseUs.module.css";
 import { CheckCircle, Clock, DollarSign, Code2, Smartphone } from "lucide-react";
-
-const reasons = [
-    { icon: <Code2 size={40} />, title: "Modern Design", desc: "Clean & Aesthetic" },
-    { icon: <Clock size={40} />, title: "Fast Delivery", desc: "On time, every time" },
-    { icon: <DollarSign size={40} />, title: "Affordable", desc: "Student-friendly rates" },
-    { icon: <CheckCircle size={40} />, title: "Clean Code", desc: "Scalable & maintainable" },
-    { icon: <Smartphone size={40} />, title: "Mobile First", desc: "Responsive everywhere" },
-];
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function WhyChooseUs() {
+    const { t } = useLanguage();
+
+    const reasons = [
+        { icon: <Code2 size={40} />, title: t.why_choose.modern_design, desc: t.why_choose.modern_desc },
+        { icon: <Clock size={40} />, title: t.why_choose.fast_delivery, desc: t.why_choose.fast_desc },
+        { icon: <DollarSign size={40} />, title: t.why_choose.affordable, desc: t.why_choose.affordable_desc },
+        { icon: <CheckCircle size={40} />, title: t.why_choose.clean_code, desc: t.why_choose.clean_desc },
+        { icon: <Smartphone size={40} />, title: t.why_choose.mobile_first, desc: t.why_choose.mobile_desc },
+    ];
+
     return (
         <section className={styles.whyChooseUs}>
             <div className={styles.container}>
@@ -24,7 +27,7 @@ export default function WhyChooseUs() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.5 }}
                 >
-                    Why Choose NelioSoft?
+                    {t.why_choose.title}
                 </motion.h2>
 
                 <div className={styles.grid}>
