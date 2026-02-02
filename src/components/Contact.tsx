@@ -1,13 +1,41 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import styles from "./Contact.module.css";
-import { Mail, Instagram } from "lucide-react";
+import { Mail, Instagram, Send } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function Contact() {
     const { t } = useLanguage();
+    const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+    const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setStatus('sending');
+
+        try {
+            const res = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            });
+
+            if (res.ok) {
+                setStatus('success');
+                setFormData({ name: "", email: "", message: "" });
+                setTimeout(() => setStatus('idle'), 5000);
+            } else {
+                setStatus('error');
+                setTimeout(() => setStatus('idle'), 5000);
+            }
+        } catch (error) {
+            console.error(error);
+            setStatus('error');
+            setTimeout(() => setStatus('idle'), 5000);
+        }
+    };
 
     return (
         <section className={styles.contact} id="contact">
@@ -57,14 +85,53 @@ export default function Contact() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: 0.3 }}
-                        onSubmit={(e) => e.preventDefault()}
+                        onSubmit={handleSubmit}
                     >
                         <div className={styles.inputGroup}>
-                            <input type="text" placeholder={t.contact.name} className={styles.input} required />
-                            <input type="email" placeholder={t.contact.email} className={styles.input} required />
+                            <input
+                                type="text"
+                                placeholder={t.contact.name}
+                                className={styles.input}
+                                required
+                                value={formData.name}
+                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                            />
+                            <input
+                                type="email"
+                                placeholder={t.contact.email}
+                                className={styles.input}
+                                required
+                                value={formData.email}
+                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                            />
                         </div>
-                        <textarea placeholder={t.contact.message} className={styles.textarea} required></textarea>
-                        <button type="submit" className={styles.submitButton}>{t.contact.send}</button>
+                        <textarea
+                            placeholder={t.contact.message}
+                            className={styles.textarea}
+                            required
+                            value={formData.message}
+                            onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                        ></textarea>
+
+                        <button
+                            type="submit"
+                            className={styles.submitButton}
+                            disabled={status === 'sending'}
+                            style={{
+                                opacity: status === 'sending' ? 0.7 : 1,
+                                cursor: status === 'sending' ? 'wait' : 'pointer'
+                            }}
+                        >
+                            {status === 'sending' ? (
+                                <span className="flex items-center gap-2">Creating Email...</span>
+                            ) : status === 'success' ? (
+                                <span className="flex items-center gap-2 text-green-400">Sent Successfully!</span>
+                            ) : status === 'error' ? (
+                                <span className="flex items-center gap-2 text-red-400">Error! Try Again</span>
+                            ) : (
+                                t.contact.send
+                            )}
+                        </button>
                     </motion.form>
                 </div>
             </div>
