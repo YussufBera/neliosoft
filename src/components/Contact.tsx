@@ -10,10 +10,12 @@ export default function Contact() {
     const { t } = useLanguage();
     const [formData, setFormData] = useState({ name: "", email: "", message: "" });
     const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setStatus('sending');
+        setErrorMessage("");
 
         try {
             const res = await fetch('/api/contact', {
@@ -22,17 +24,21 @@ export default function Contact() {
                 body: JSON.stringify(formData),
             });
 
+            const data = await res.json();
+
             if (res.ok) {
                 setStatus('success');
                 setFormData({ name: "", email: "", message: "" });
                 setTimeout(() => setStatus('idle'), 5000);
             } else {
                 setStatus('error');
+                setErrorMessage(data.details || data.error || "Something went wrong");
                 setTimeout(() => setStatus('idle'), 5000);
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error(error);
             setStatus('error');
+            setErrorMessage(error.message || "Network Error");
             setTimeout(() => setStatus('idle'), 5000);
         }
     };
@@ -113,25 +119,32 @@ export default function Contact() {
                             onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         ></textarea>
 
-                        <button
-                            type="submit"
-                            className={styles.submitButton}
-                            disabled={status === 'sending'}
-                            style={{
-                                opacity: status === 'sending' ? 0.7 : 1,
-                                cursor: status === 'sending' ? 'wait' : 'pointer'
-                            }}
-                        >
-                            {status === 'sending' ? (
-                                <span className="flex items-center gap-2">Creating Email...</span>
-                            ) : status === 'success' ? (
-                                <span className="flex items-center gap-2 text-green-400">Sent Successfully!</span>
-                            ) : status === 'error' ? (
-                                <span className="flex items-center gap-2 text-red-400">Error! Try Again</span>
-                            ) : (
-                                t.contact.send
+                        <div className="flex flex-col gap-2 w-full">
+                            <button
+                                type="submit"
+                                className={styles.submitButton}
+                                disabled={status === 'sending'}
+                                style={{
+                                    opacity: status === 'sending' ? 0.7 : 1,
+                                    cursor: status === 'sending' ? 'wait' : 'pointer'
+                                }}
+                            >
+                                {status === 'sending' ? (
+                                    <span className="flex items-center gap-2">Creating Email...</span>
+                                ) : status === 'success' ? (
+                                    <span className="flex items-center gap-2 text-green-400">Sent Successfully!</span>
+                                ) : status === 'error' ? (
+                                    <span className="flex items-center gap-2 text-red-400">Error! Try Again</span>
+                                ) : (
+                                    t.contact.send
+                                )}
+                            </button>
+                            {errorMessage && (
+                                <div className="text-red-500 text-sm mt-2 p-2 bg-red-100/10 rounded border border-red-500/20">
+                                    Debug Error: {errorMessage}
+                                </div>
                             )}
-                        </button>
+                        </div>
                     </motion.form>
                 </div>
             </div>
