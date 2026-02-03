@@ -112,8 +112,8 @@
 }
 
 .heroLogo {
-    width: 210px;
-    height: 140px;
+    width: 154px;
+    height: 161px;
     object-fit: contain;
     filter: drop-shadow(0 0 30px rgba(124, 58, 237, 0.3));
     border-radius: 24px;
@@ -250,8 +250,8 @@
     }
 
     .heroLogo {
-        width: 150px;
-        height: 100px;
+        width: 100px;
+        height: 105px;
     }
 
     .actions {

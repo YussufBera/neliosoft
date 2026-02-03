@@ -67,10 +67,10 @@ export default function Hero() {
             >
                 <motion.div variants={itemVariants} className={styles.heroLogoWrapper}>
                     <Image
-                        src="/neliosoft-new-logo.png"
+                        src="/neliosoft-icon-only.png"
                         alt="NelioSoft Logo"
-                        width={180}
-                        height={120}
+                        width={154}
+                        height={161}
                         className={styles.heroLogo}
                         priority
                     />
