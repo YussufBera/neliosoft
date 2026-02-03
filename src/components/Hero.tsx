@@ -69,8 +69,8 @@ export default function Hero() {
                     <Image
                         src="/neliosoft-icon-only.png"
                         alt="NelioSoft Logo"
-                        width={154}
-                        height={161}
+                        width={130}
+                        height={136}
                         className={styles.heroLogo}
                         priority
                     />
