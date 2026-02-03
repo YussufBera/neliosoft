@@ -5,11 +5,14 @@ import styles from "./Navbar.module.css";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 import LanguageSwitcher from "./LanguageSwitcher";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const { t } = useLanguage();
+    const pathname = usePathname();
+    const router = useRouter();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -20,11 +23,27 @@ export default function Navbar() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    const scrollToSection = (id: string) => {
-        const element = document.getElementById(id);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-            setIsMobileMenuOpen(false); // Close menu on click
+    const handleNavigation = (id: string) => {
+        setIsMobileMenuOpen(false); // Always close mobile menu first
+
+        if (pathname === '/') {
+            // If on homepage, just scroll
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        } else {
+            // If on admin or other pages, navigate to homepage with hash
+            router.push(`/#${id}`);
+        }
+    };
+
+    const handleHomeClick = () => {
+        setIsMobileMenuOpen(false);
+        if (pathname === '/') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            router.push('/');
         }
     };
 
@@ -40,11 +59,11 @@ export default function Navbar() {
                 </Link>
 
                 <ul className={`${styles.navLinks} ${isMobileMenuOpen ? styles.active : ""}`}>
-                    <li><button onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); setIsMobileMenuOpen(false); }} className={styles.navLink}>{t.nav.home}</button></li>
-                    <li><button onClick={() => scrollToSection('about')} className={styles.navLink}>{t.nav.about}</button></li>
-                    <li><button onClick={() => scrollToSection('services')} className={styles.navLink}>{t.nav.services}</button></li>
-                    <li><button onClick={() => scrollToSection('portfolio')} className={styles.navLink}>{t.nav.portfolio}</button></li>
-                    <li><button onClick={() => scrollToSection('contact')} className={styles.navLink}>{t.nav.contact}</button></li>
+                    <li><button onClick={handleHomeClick} className={styles.navLink}>{t.nav.home}</button></li>
+                    <li><button onClick={() => handleNavigation('about')} className={styles.navLink}>{t.nav.about}</button></li>
+                    <li><button onClick={() => handleNavigation('services')} className={styles.navLink}>{t.nav.services}</button></li>
+                    <li><button onClick={() => handleNavigation('portfolio')} className={styles.navLink}>{t.nav.portfolio}</button></li>
+                    <li><button onClick={() => handleNavigation('contact')} className={styles.navLink}>{t.nav.contact}</button></li>
                     <li><LanguageSwitcher /></li>
                 </ul>
 
