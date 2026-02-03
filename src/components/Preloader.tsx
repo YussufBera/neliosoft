@@ -71,10 +71,10 @@ export default function Preloader({ onComplete }: { onComplete: () => void }) {
                         transition={{ duration: 1.2, ease: "easeOut" }}
                     >
                         <Image
-                            src="/icon-logo-transparent.png"
+                            src="/neliosoft-icon-only.png"
                             alt="NelioSoft N Logo"
-                            width={120}
-                            height={120}
+                            width={154}
+                            height={161}
                             priority
                             style={{ objectFit: "contain" }}
                         />
