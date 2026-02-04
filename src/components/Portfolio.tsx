@@ -19,14 +19,20 @@ export default function Portfolio() {
         {
             title: t.portfolio.project_barber,
             category: t.portfolio.cat_appointment,
-            link: "https://berber-pi.vercel.app",
-            image: "/barber-preview-v2.png"
+            link: "https://berber.neliosoft.com",
+            image: "/barber-preview-v3.png"
         },
         {
             title: t.portfolio.project_migration,
             category: t.portfolio.cat_consultancy,
             link: "https://easygoc.com",
             image: "/easygoc-preview-v2.png"
+        },
+        {
+            title: t.portfolio.project_nail,
+            category: t.portfolio.cat_appointment,
+            link: "https://nail.neliosoft.com",
+            image: "/nail-studio-preview.png"
         },
     ];
 
