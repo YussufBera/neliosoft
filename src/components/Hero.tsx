@@ -42,15 +42,45 @@ export default function Hero() {
         }
     };
 
+    const [currentVideo, setCurrentVideo] = React.useState(0);
+    const videos = [
+        "https://assets.mixkit.co/videos/24875/24875-720.mp4", // Barber/Hair
+        "https://assets.mixkit.co/videos/15804/15804-720.mp4", // Salon/Spa
+        "https://assets.mixkit.co/videos/39480/39480-720.mp4", // Office/Reservation
+        "https://assets.mixkit.co/videos/16325/16325-720.mp4"  // Clinic/Doctor
+    ];
+
+    React.useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentVideo((prev) => (prev + 1) % videos.length);
+        }, 8000);
+        return () => clearInterval(timer);
+    }, []);
+
     return (
         <section className={styles.hero}>
             {/* Video Background */}
             <div className={styles.videoBackground}>
-                <video autoPlay loop muted playsInline className={styles.video}>
-                    {/* Using a reliable sample video for testing */}
-                    <source src="https://assets.mixkit.co/videos/preview/mixkit-people-working-in-a-busy-office-hub-4414-large.mp4" type="video/mp4" />
-                </video>
-                <div className={styles.videoOverlay} />
+                {videos.map((src, index) => (
+                    <video
+                        key={src}
+                        src={src}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className={styles.video}
+                        style={{
+                            opacity: index === currentVideo ? 0.6 : 0,
+                            transition: 'opacity 1.5s ease-in-out',
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            zIndex: index === currentVideo ? 1 : 0
+                        }}
+                    />
+                ))}
+                <div className={styles.videoOverlay} style={{ zIndex: 2 }} />
             </div>
 
             <motion.div
