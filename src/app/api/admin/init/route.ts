@@ -30,9 +30,10 @@ export async function GET(request: Request) {
 
     for (const col of columns) {
         try {
+            // Ensure schema is updated
             await pool.query(`ALTER TABLE messages ADD COLUMN IF NOT EXISTS ${ col }`);
         } catch (e) {
-            console.error(`Failed to add column ${ col }: `, e);
+            console.error(`Failed to update schema for column ${ col }: `, e);
         }
     }
 
