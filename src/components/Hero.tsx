@@ -88,7 +88,7 @@ export default function Hero() {
                     <button className={styles.buttonPrimary} onClick={() => document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' })}>
                         {t.hero.view_work}
                     </button>
-                    <button className={styles.buttonSecondary} onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>
+                    <button className={styles.buttonSecondary} onClick={() => window.location.href = '/get-started'}>
                         {t.hero.contact_us}
                     </button>
                 </motion.div>

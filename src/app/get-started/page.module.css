@@ -1,0 +1,254 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    padding: 20px;
+}
+
+.wizardCard {
+    width: 100%;
+    max-width: 600px;
+    background: white;
+    border-radius: 24px;
+    box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    padding: 40px;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+.progressContainer {
+    margin-bottom: 40px;
+}
+
+.progressBar {
+    height: 6px;
+    background: #f1f5f9;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progressFill {
+    height: 100%;
+    background: linear-gradient(90deg, #2563eb, #9333ea);
+    transition: width 0.4s ease;
+}
+
+.stepWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.stepWrapper h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    width: 100%;
+}
+
+.optionCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px;
+    background: #f8fafc;
+    border: 2px solid transparent;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.optionCard:hover {
+    background: #f1f5f9;
+    transform: translateY(-2px);
+}
+
+.optionCard.selected {
+    background: #eff6ff;
+    border-color: #2563eb;
+    color: #2563eb;
+}
+
+.iconWrapper {
+    margin-bottom: 12px;
+    color: inherit;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+.listOption {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background: #f8fafc;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    width: 100%;
+    text-align: left;
+    transition: all 0.2s ease;
+    color: #475569;
+}
+
+.listOption:hover {
+    background: #f1f5f9;
+}
+
+.listOption.selected {
+    background: #eff6ff;
+    border-color: #2563eb;
+    color: #2563eb;
+}
+
+.listOption span {
+    flex: 1;
+    margin-left: 16px;
+    font-weight: 500;
+}
+
+.chevron {
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.listOption:hover .chevron {
+    opacity: 0.5;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.input {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 16px;
+    transition: all 0.2s;
+}
+
+.input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+.submitButton {
+    width: 100%;
+    padding: 16px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 16px;
+}
+
+.submitButton:hover {
+    background: #1d4ed8;
+}
+
+.submitButton:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.backButton {
+    margin-top: 32px;
+    background: none;
+    border: none;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.backButton:hover {
+    color: #64748b;
+}
+
+.successState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 40px 0;
+}
+
+.successIcon {
+    width: 80px;
+    height: 80px;
+    background: #dcfce7;
+    color: #16a34a;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+.successState h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 12px;
+}
+
+.successState p {
+    color: #64748b;
+    margin-bottom: 32px;
+    max-width: 300px;
+}
+
+.homeButton {
+    padding: 12px 24px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    color: #475569;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.homeButton:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+}
+
+@media (max-width: 640px) {
+    .wizardCard {
+        padding: 24px;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}

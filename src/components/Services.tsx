@@ -3,7 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import styles from "./Services.module.css";
-import { Monitor, Briefcase, Code } from "lucide-react";
+import { Calendar, Scissors, Sparkles } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function Services() {
@@ -13,17 +13,17 @@ export default function Services() {
         {
             title: t.services.design_title,
             description: t.services.design_desc,
-            icon: <Monitor size={32} />
+            icon: <Calendar size={32} />
         },
         {
             title: t.services.business_title,
             description: t.services.business_desc,
-            icon: <Briefcase size={32} />
+            icon: <Scissors size={32} />
         },
         {
             title: t.services.solutions_title,
             description: t.services.solutions_desc,
-            icon: <Code size={32} />
+            icon: <Sparkles size={32} />
         }
     ];
 

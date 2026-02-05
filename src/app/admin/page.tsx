@@ -139,6 +139,27 @@ export default function AdminPage() {
                                         <div>
                                             <h3 className="font-bold text-lg text-slate-800">{msg.name}</h3>
                                             <p className="text-sm text-slate-500">{msg.email}</p>
+
+                                            {/* Lead Tags */}
+                                            {(msg.business_type || msg.team_size || msg.budget) && (
+                                                <div className="flex flex-wrap gap-2 mt-2">
+                                                    {msg.business_type && (
+                                                        <span className="px-2 py-1 bg-purple-50 text-purple-700 text-xs font-medium rounded-md border border-purple-100">
+                                                            {msg.business_type}
+                                                        </span>
+                                                    )}
+                                                    {msg.team_size && (
+                                                        <span className="px-2 py-1 bg-blue-50 text-blue-700 text-xs font-medium rounded-md border border-blue-100">
+                                                            {msg.team_size}
+                                                        </span>
+                                                    )}
+                                                    {msg.budget && (
+                                                        <span className="px-2 py-1 bg-green-50 text-green-700 text-xs font-medium rounded-md border border-green-100">
+                                                            {msg.budget}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                     <div className="flex flex-col md:items-end gap-1 text-sm text-slate-400">
