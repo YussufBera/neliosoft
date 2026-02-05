@@ -44,19 +44,13 @@ export default function Hero() {
 
     return (
         <section className={styles.hero}>
-            {/* Animated Background */}
-            <div className={styles.background}>
-                <motion.div
-                    className={`${styles.blob} ${styles.blob1}`}
-                    animate="animate"
-                    variants={blobVariants}
-                />
-                <motion.div
-                    className={`${styles.blob} ${styles.blob2}`}
-                    animate="animate"
-                    variants={blobVariants}
-                    transition={{ duration: 12, repeat: Infinity, ease: [0, 0, 1, 1], delay: 1 }}
-                />
+            {/* Video Background */}
+            <div className={styles.videoBackground}>
+                <video autoPlay loop muted playsInline className={styles.video}>
+                    {/* Using a placeholder video - User should replace this with their preferred Pexels/Stock video */}
+                    <source src="https://videos.pexels.com/video-files/3196058/3196058-uhd_2560_1440_25fps.mp4" type="video/mp4" />
+                </video>
+                <div className={styles.videoOverlay} />
             </div>
 
             <motion.div
@@ -110,6 +104,6 @@ export default function Hero() {
                     </div>
                 </motion.div>
             </motion.div>
-        </section>
+        </section >
     );
 }

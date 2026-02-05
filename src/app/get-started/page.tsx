@@ -323,6 +323,11 @@ export default function GetStartedPage() {
                                         >
                                             {status === 'submitting' ? t.contact.sending : t.get_started.submit}
                                         </button>
+                                        {status === 'error' && (
+                                            <p className={styles.errorMessage}>
+                                                Something went wrong. Please try again or contact us directly.
+                                            </p>
+                                        )}
                                     </form>
                                     <button onClick={() => setStep('budget')} type="button" className={styles.backButton}>
                                         <ChevronLeft size={16} /> Back

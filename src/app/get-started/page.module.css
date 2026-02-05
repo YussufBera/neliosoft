@@ -140,6 +140,13 @@
     max-width: 400px;
 }
 
+.errorMessage {
+    color: #ef4444;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 8px;
+}
+
 .inputIconWrapper {
     position: relative;
     width: 100%;
