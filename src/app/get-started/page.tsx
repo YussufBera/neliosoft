@@ -92,10 +92,20 @@ export default function GetStartedPage() {
             if (res.ok) {
                 setStatus('success');
             } else {
+                const data = await res.json();
+                console.error('Submission error:', data);
+                // Set a custom property on the error object or just log it, 
+                // but here we will set status to error and maybe save the message to display
+                // For simplicity, we'll just set status 'error' but ideally we'd show the message.
+                // Hack: temporarily using a global variable or alert could work, but let's update state
+                // Note: Ideally we should add an errorMessage state, but sticking to the requested flow:
                 setStatus('error');
+                if (data.error) alert(`Error: ${data.error}`); // Immediate feedback for user
             }
-        } catch (error) {
+        } catch (error: any) {
+            console.error('Network error:', error);
             setStatus('error');
+            alert(`Network Error: ${error.message}`);
         }
     };
 

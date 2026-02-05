@@ -20,10 +20,7 @@ export async function POST(req: Request) {
 
         return NextResponse.json({ success: true, message: 'Message saved successfully' });
     } catch (error: any) {
-        console.error('API Error:', error);
-        return NextResponse.json({
-            error: 'Database Error',
-            details: error.message
-        }, { status: 500 });
+        console.error('Contact API Error:', error);
+        return NextResponse.json({ error: error.message || 'Internal Server Error', details: JSON.stringify(error) }, { status: 500 });
     }
 }

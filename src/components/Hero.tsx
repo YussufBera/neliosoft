@@ -47,8 +47,8 @@ export default function Hero() {
             {/* Video Background */}
             <div className={styles.videoBackground}>
                 <video autoPlay loop muted playsInline className={styles.video}>
-                    {/* Using a placeholder video - User should replace this with their preferred Pexels/Stock video */}
-                    <source src="https://videos.pexels.com/video-files/3196058/3196058-uhd_2560_1440_25fps.mp4" type="video/mp4" />
+                    {/* Using a reliable sample video for testing */}
+                    <source src="https://assets.mixkit.co/videos/preview/mixkit-people-working-in-a-busy-office-hub-4414-large.mp4" type="video/mp4" />
                 </video>
                 <div className={styles.videoOverlay} />
             </div>
