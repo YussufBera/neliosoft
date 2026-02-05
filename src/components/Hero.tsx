@@ -53,14 +53,24 @@ export default function Hero() {
     const [loadedVideos, setLoadedVideos] = React.useState<boolean[]>(new Array(videos.length).fill(false));
 
     React.useEffect(() => {
+        // Force all videos to be considered "loaded" after 3 seconds as a fallback
+        const timeout = setTimeout(() => {
+            setLoadedVideos(new Array(videos.length).fill(true));
+        }, 3000);
+
         const timer = setInterval(() => {
             setCurrentVideo((prev) => (prev + 1) % videos.length);
         }, 8000);
-        return () => clearInterval(timer);
+
+        return () => {
+            clearInterval(timer);
+            clearTimeout(timeout);
+        };
     }, []);
 
     const handleVideoLoad = (index: number) => {
         setLoadedVideos(prev => {
+            if (prev[index]) return prev;
             const newState = [...prev];
             newState[index] = true;
             return newState;
@@ -80,9 +90,10 @@ export default function Hero() {
                         muted
                         playsInline
                         onLoadedData={() => handleVideoLoad(index)}
+                        onCanPlay={() => handleVideoLoad(index)} // Dual event check
                         className={styles.video}
                         style={{
-                            opacity: (index === currentVideo && loadedVideos[index]) ? 0.35 : 0,
+                            opacity: (index === currentVideo && loadedVideos[index]) ? 0.5 : 0, // Increased from 0.35 to 0.5
                             transition: 'opacity 1.5s ease-in-out',
                             position: 'absolute',
                             top: 0,
