@@ -155,40 +155,69 @@
 }
 
 .buttonPrimary {
-    padding: 16px 36px;
-    font-size: 1.1rem;
-    font-weight: 600;
+    position: relative;
+    padding: 16px 40px;
+    font-size: 1.15rem;
+    font-weight: 700;
     color: white;
-    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+    background: linear-gradient(135deg, #2563eb 0%, #9333ea 100%);
     border-radius: 50px;
-    box-shadow: 0 10px 30px rgba(37, 99, 235, 0.25);
+    box-shadow: 0 10px 30px rgba(79, 70, 229, 0.4);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+    z-index: 10;
 }
 
 .buttonPrimary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 20px 40px rgba(124, 58, 237, 0.3);
-    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(124, 58, 237, 0.5);
+    background: linear-gradient(135deg, #3b82f6 0%, #a855f7 100%);
+}
+
+.shimmer {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+    transform: skewX(-20deg);
+    animation: shimmer 3s infinite;
+    pointer-events: none;
+}
+
+@keyframes shimmer {
+    0% {
+        left: -100%;
+    }
+
+    20% {
+        left: 100%;
+    }
+
+    100% {
+        left: 100%;
+    }
 }
 
 .buttonSecondary {
     padding: 16px 36px;
     font-size: 1.1rem;
-    font-weight: 600;
-    color: #334155;
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(203, 213, 225, 0.6);
+    font-weight: 500;
+    color: #475569;
+    background: transparent;
+    border: 2px solid #e2e8f0;
     border-radius: 50px;
     transition: all 0.3s ease;
 }
 
 .buttonSecondary:hover {
-    background-color: white;
+    background: white;
+    color: #0f172a;
+    border-color: #cbd5e1;
     transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-    border-color: #94a3b8;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
 }
 
 .scrollIndicator {

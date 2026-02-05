@@ -137,15 +137,27 @@ export default function AdminPage() {
                                             {msg.name.charAt(0).toUpperCase()}
                                         </div>
                                         <div>
-                                            <h3 className="font-bold text-lg text-slate-800">{msg.name}</h3>
+                                            <div className="flex items-center gap-2 mb-1">
+                                                <h3 className="font-bold text-lg text-slate-800">{msg.name}</h3>
+                                                {msg.business_name && (
+                                                    <span className="text-sm font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
+                                                        {msg.business_name}
+                                                    </span>
+                                                )}
+                                            </div>
                                             <p className="text-sm text-slate-500">{msg.email}</p>
 
                                             {/* Lead Tags */}
-                                            {(msg.business_type || msg.team_size || msg.budget) && (
+                                            {(msg.business_type || msg.team_size || msg.budget || msg.daily_visitors) && (
                                                 <div className="flex flex-wrap gap-2 mt-2">
                                                     {msg.business_type && (
                                                         <span className="px-2 py-1 bg-purple-50 text-purple-700 text-xs font-medium rounded-md border border-purple-100">
                                                             {msg.business_type}
+                                                        </span>
+                                                    )}
+                                                    {msg.daily_visitors && (
+                                                        <span className="px-2 py-1 bg-orange-50 text-orange-700 text-xs font-medium rounded-md border border-orange-100">
+                                                            {msg.daily_visitors} Visits
                                                         </span>
                                                     )}
                                                     {msg.team_size && (

@@ -85,11 +85,13 @@ export default function Hero() {
                 </motion.p>
 
                 <motion.div className={styles.actions} variants={itemVariants}>
-                    <button className={styles.buttonPrimary} onClick={() => document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' })}>
+                    <button className={styles.buttonSecondary} onClick={() => document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' })}>
                         {t.hero.view_work}
                     </button>
-                    <button className={styles.buttonSecondary} onClick={() => window.location.href = '/get-started'}>
+                    <button className={styles.buttonPrimary} onClick={() => window.location.href = '/get-started'}>
                         {t.hero.contact_us}
+                        {/* Shimmer effect for primary button */}
+                        <div className={styles.shimmer} />
                     </button>
                 </motion.div>
 

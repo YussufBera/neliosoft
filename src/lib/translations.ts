@@ -56,9 +56,12 @@ export const translations = {
         },
         get_started: {
             step1_title: "Wählen Sie Ihren Geschäftstyp",
-            step2_title: "Wie groß ist Ihr Team?",
-            step3_title: "Monatliches Budget für Software",
-            step4_title: "Ihre Kontaktdaten",
+            step2_title: "Wie heißt Ihr Unternehmen?",
+            step3_title: "Wie groß ist Ihr Team?",
+            step4_title: "Tägliche Besucherzahl (geschätzt)",
+            step5_title: "Monatliches Budget für Software",
+            step6_title: "Ihre Kontaktdaten",
+            business_name_placeholder: "z.B. Elite Barber Shop",
             business_types: {
                 barber: "Barber Shop",
                 nail: "Nagelstudio",
@@ -72,6 +75,11 @@ export const translations = {
                 small: "1-3 Mitarbeiter",
                 medium: "4-10 Mitarbeiter",
                 large: "10+ Mitarbeiter",
+            },
+            visitor_ranges: {
+                low: "0 - 50",
+                medium: "50 - 200",
+                high: "200+",
             },
             budget_ranges: {
                 basic: "€20 - €50 / Monat",
@@ -167,9 +175,12 @@ export const translations = {
         },
         get_started: {
             step1_title: "Select Your Business Type",
-            step2_title: "How big is your team?",
-            step3_title: "Monthly Software Budget",
-            step4_title: "Your Contact Details",
+            step2_title: "What is your Business Name?",
+            step3_title: "How big is your team?",
+            step4_title: "Daily Visitors (Est.)",
+            step5_title: "Monthly Software Budget",
+            step6_title: "Your Contact Details",
+            business_name_placeholder: "e.g. Elite Barber Shop",
             business_types: {
                 barber: "Barber Shop",
                 nail: "Nail Studio",
@@ -183,6 +194,11 @@ export const translations = {
                 small: "1-3 Employees",
                 medium: "4-10 Employees",
                 large: "10+ Employees",
+            },
+            visitor_ranges: {
+                low: "0 - 50",
+                medium: "50 - 200",
+                high: "200+",
             },
             budget_ranges: {
                 basic: "€20 - €50 / Month",
@@ -278,9 +294,12 @@ export const translations = {
         },
         get_started: {
             step1_title: "İşletme Türünüzü Seçin",
-            step2_title: "Ekibiniz ne kadar büyük?",
-            step3_title: "Aylık Yazılım Bütçeniz",
-            step4_title: "İletişim Bilgileriniz",
+            step2_title: "İşletmenizin Adı Nedir?",
+            step3_title: "Ekibiniz ne kadar büyük?",
+            step4_title: "Günlük Ortalama Ziyaretçi",
+            step5_title: "Aylık Yazılım Bütçeniz",
+            step6_title: "İletişim Bilgileriniz",
+            business_name_placeholder: "Örn: Elite Berber",
             business_types: {
                 barber: "Berber",
                 nail: "Nail Art Stüdyosu",
@@ -294,6 +313,11 @@ export const translations = {
                 small: "1-3 Çalışan",
                 medium: "4-10 Çalışan",
                 large: "10+ Çalışan",
+            },
+            visitor_ranges: {
+                low: "0 - 50",
+                medium: "50 - 200",
+                high: "200+",
             },
             budget_ranges: {
                 basic: "€20 - €50 / Ay",
@@ -389,9 +413,12 @@ export const translations = {
         },
         get_started: {
             step1_title: "Cûreya Karsaziya Xwe Hilbijêrin",
-            step2_title: "Tîmê we çiqas mezin e?",
-            step3_title: "Bûdceya Mehane ya Nivîsbariyê",
-            step4_title: "Agahdariya Têkiliya We",
+            step2_title: "Navê Karsaziya We Çi Ye?",
+            step3_title: "Tîmê we çiqas mezin e?",
+            step4_title: "Serdêrên Rojane (Texmînî)",
+            step5_title: "Bûdceya Mehane ya Nivîsbariyê",
+            step6_title: "Agahdariya Têkiliya We",
+            business_name_placeholder: "Mînak: Elite Barber",
             business_types: {
                 barber: "Berber",
                 nail: "Stûdyoya Nail Art",
@@ -405,6 +432,11 @@ export const translations = {
                 small: "1-3 Karmend",
                 medium: "4-10 Karmend",
                 large: "10+ Karmend",
+            },
+            visitor_ranges: {
+                low: "0 - 50",
+                medium: "50 - 200",
+                high: "200+",
             },
             budget_ranges: {
                 basic: "€20 - €50 / Meh",

@@ -5,7 +5,7 @@ export const runtime = 'nodejs';
 
 export async function POST(req: Request) {
     try {
-        const { name, email, phone, countryCode, message, business_type, team_size, budget } = await req.json();
+        const { name, email, phone, countryCode, message, business_type, team_size, budget, business_name, daily_visitors } = await req.json();
 
         if (!name || !email) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
@@ -14,8 +14,8 @@ export async function POST(req: Request) {
         const fullPhone = countryCode && phone ? `${countryCode} ${phone}` : (phone || 'N/A');
 
         await pool.query(
-            'INSERT INTO messages (name, email, phone, message, business_type, team_size, budget, date) VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())',
-            [name, email, fullPhone, message || "Lead Form Submission", business_type || null, team_size || null, budget || null]
+            'INSERT INTO messages (name, email, phone, message, business_type, team_size, budget, business_name, daily_visitors, date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, NOW())',
+            [name, email, fullPhone, message || "Lead Form Submission", business_type || null, team_size || null, budget || null, business_name || null, daily_visitors || null]
         );
 
         return NextResponse.json({ success: true, message: 'Message saved successfully' });

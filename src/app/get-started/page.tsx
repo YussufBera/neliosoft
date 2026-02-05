@@ -3,18 +3,20 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
-import { ChevronRight, ChevronLeft, Check, Calendar, Users, Wallet, CreditCard, Scissors, Activity, Heart, Stethoscope, MoreHorizontal } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Check, Calendar, Users, Wallet, CreditCard, Scissors, Activity, Heart, Stethoscope, MoreHorizontal, Building, Store } from 'lucide-react';
 import styles from './page.module.css';
 
 // Define steps
-type Step = 'business_type' | 'team_size' | 'budget' | 'contact';
+type Step = 'business_type' | 'business_name' | 'team_size' | 'daily_visitors' | 'budget' | 'contact';
 
 export default function GetStartedPage() {
     const { t } = useLanguage();
     const [step, setStep] = useState<Step>('business_type');
     const [formData, setFormData] = useState({
         business_type: '',
+        business_name: '',
         team_size: '',
+        daily_visitors: '',
         budget: '',
         name: '',
         email: '',
@@ -28,7 +30,7 @@ export default function GetStartedPage() {
         <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" /><path d="M5 3v4" /><path d="M9 3v4" /><path d="M3 9h4" /></svg>
     );
 
-    // Business types options
+    // Options
     const businessTypes = [
         { id: 'barber', icon: <Scissors size={28} />, label: t.get_started.business_types.barber },
         { id: 'nail', icon: <SparklesIcon size={28} />, label: t.get_started.business_types.nail },
@@ -45,6 +47,12 @@ export default function GetStartedPage() {
         { id: 'large', label: t.get_started.team_sizes.large },
     ];
 
+    const visitorRanges = [
+        { id: 'low', label: t.get_started.visitor_ranges.low },
+        { id: 'medium', label: t.get_started.visitor_ranges.medium },
+        { id: 'high', label: t.get_started.visitor_ranges.high },
+    ];
+
     const budgetRanges = [
         { id: 'basic', label: t.get_started.budget_ranges.basic },
         { id: 'standard', label: t.get_started.budget_ranges.standard },
@@ -54,12 +62,20 @@ export default function GetStartedPage() {
     const handleSelection = (field: keyof typeof formData, value: string) => {
         setFormData(prev => ({ ...prev, [field]: value }));
 
-        // Auto-advance
+        // Auto-advance logic
         setTimeout(() => {
-            if (step === 'business_type') setStep('team_size');
-            else if (step === 'team_size') setStep('budget');
-            else if (step === 'budget') setStep('contact');
+            if (field === 'business_type') setStep('business_name');
+            else if (field === 'team_size') setStep('daily_visitors');
+            else if (field === 'daily_visitors') setStep('budget');
+            else if (field === 'budget') setStep('contact');
         }, 300);
+    };
+
+    const handleBusinessNameSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (formData.business_name.trim()) {
+            setStep('team_size');
+        }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -83,19 +99,12 @@ export default function GetStartedPage() {
         }
     };
 
-    const variants = {
-        enter: (direction: number) => ({
-            x: direction > 0 ? 50 : -50,
-            opacity: 0
-        }),
-        center: {
-            x: 0,
-            opacity: 1
-        },
-        exit: (direction: number) => ({
-            x: direction < 0 ? 50 : -50,
-            opacity: 0
-        })
+    const styles_progressBar = {
+        width: step === 'business_type' ? '16%' :
+            step === 'business_name' ? '33%' :
+                step === 'team_size' ? '50%' :
+                    step === 'daily_visitors' ? '66%' :
+                        step === 'budget' ? '83%' : '100%'
     };
 
     return (
@@ -105,14 +114,7 @@ export default function GetStartedPage() {
                 {/* Progress Bar */}
                 <div className={styles.progressContainer}>
                     <div className={styles.progressBar}>
-                        <div
-                            className={styles.progressFill}
-                            style={{
-                                width: step === 'business_type' ? '25%' :
-                                    step === 'team_size' ? '50%' :
-                                        step === 'budget' ? '75%' : '100%'
-                            }}
-                        />
+                        <div className={styles.progressFill} style={styles_progressBar} />
                     </div>
                 </div>
 
@@ -160,8 +162,8 @@ export default function GetStartedPage() {
                                 </motion.div>
                             )}
 
-                            {/* Step 2: Team Size */}
-                            {step === 'team_size' && (
+                            {/* Step 2: Business Name */}
+                            {step === 'business_name' && (
                                 <motion.div
                                     key="step2"
                                     initial={{ opacity: 0, y: 20 }}
@@ -170,6 +172,39 @@ export default function GetStartedPage() {
                                     className={styles.stepWrapper}
                                 >
                                     <h1>{t.get_started.step2_title}</h1>
+                                    <form onSubmit={handleBusinessNameSubmit} className={styles.form}>
+                                        <div className={styles.inputIconWrapper}>
+                                            <Store className={styles.inputIcon} size={20} />
+                                            <input
+                                                type="text"
+                                                placeholder={t.get_started.business_name_placeholder}
+                                                autoFocus
+                                                required
+                                                value={formData.business_name}
+                                                onChange={e => setFormData({ ...formData, business_name: e.target.value })}
+                                                className={styles.inputWithIcon}
+                                            />
+                                        </div>
+                                        <button type="submit" className={styles.submitButton}>
+                                            Next <ChevronRight size={16} />
+                                        </button>
+                                    </form>
+                                    <button onClick={() => setStep('business_type')} className={styles.backButton}>
+                                        <ChevronLeft size={16} /> Back
+                                    </button>
+                                </motion.div>
+                            )}
+
+                            {/* Step 3: Team Size */}
+                            {step === 'team_size' && (
+                                <motion.div
+                                    key="step3"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -20 }}
+                                    className={styles.stepWrapper}
+                                >
+                                    <h1>{t.get_started.step3_title}</h1>
                                     <div className={styles.list}>
                                         {teamSizes.map((size) => (
                                             <button
@@ -183,22 +218,51 @@ export default function GetStartedPage() {
                                             </button>
                                         ))}
                                     </div>
-                                    <button onClick={() => setStep('business_type')} className={styles.backButton}>
+                                    <button onClick={() => setStep('business_name')} className={styles.backButton}>
                                         <ChevronLeft size={16} /> Back
                                     </button>
                                 </motion.div>
                             )}
 
-                            {/* Step 3: Budget */}
-                            {step === 'budget' && (
+                            {/* Step 4: Daily Visitors */}
+                            {step === 'daily_visitors' && (
                                 <motion.div
-                                    key="step3"
+                                    key="step4"
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -20 }}
                                     className={styles.stepWrapper}
                                 >
-                                    <h1>{t.get_started.step3_title}</h1>
+                                    <h1>{t.get_started.step4_title}</h1>
+                                    <div className={styles.list}>
+                                        {visitorRanges.map((range) => (
+                                            <button
+                                                key={range.id}
+                                                onClick={() => handleSelection('daily_visitors', range.id)}
+                                                className={`${styles.listOption} ${formData.daily_visitors === range.id ? styles.selected : ''}`}
+                                            >
+                                                <Activity size={24} />
+                                                <span>{range.label}</span>
+                                                <ChevronRight className={styles.chevron} />
+                                            </button>
+                                        ))}
+                                    </div>
+                                    <button onClick={() => setStep('team_size')} className={styles.backButton}>
+                                        <ChevronLeft size={16} /> Back
+                                    </button>
+                                </motion.div>
+                            )}
+
+                            {/* Step 5: Budget */}
+                            {step === 'budget' && (
+                                <motion.div
+                                    key="step5"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -20 }}
+                                    className={styles.stepWrapper}
+                                >
+                                    <h1>{t.get_started.step5_title}</h1>
                                     <div className={styles.list}>
                                         {budgetRanges.map((range) => (
                                             <button
@@ -212,22 +276,22 @@ export default function GetStartedPage() {
                                             </button>
                                         ))}
                                     </div>
-                                    <button onClick={() => setStep('team_size')} className={styles.backButton}>
+                                    <button onClick={() => setStep('daily_visitors')} className={styles.backButton}>
                                         <ChevronLeft size={16} /> Back
                                     </button>
                                 </motion.div>
                             )}
 
-                            {/* Step 4: Contact */}
+                            {/* Step 6: Contact */}
                             {step === 'contact' && (
                                 <motion.div
-                                    key="step4"
+                                    key="step6"
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -20 }}
                                     className={styles.stepWrapper}
                                 >
-                                    <h1>{t.get_started.step4_title}</h1>
+                                    <h1>{t.get_started.step6_title}</h1>
                                     <form onSubmit={handleSubmit} className={styles.form}>
                                         <input
                                             type="text"

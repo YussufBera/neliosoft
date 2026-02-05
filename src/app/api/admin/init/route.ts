@@ -22,6 +22,8 @@ export async function GET(request: Request) {
       ALTER TABLE messages ADD COLUMN IF NOT EXISTS business_type VARCHAR(100);
       ALTER TABLE messages ADD COLUMN IF NOT EXISTS team_size VARCHAR(50);
       ALTER TABLE messages ADD COLUMN IF NOT EXISTS budget VARCHAR(100);
+      ALTER TABLE messages ADD COLUMN IF NOT EXISTS business_name VARCHAR(255);
+      ALTER TABLE messages ADD COLUMN IF NOT EXISTS daily_visitors VARCHAR(50);
     `);
     return NextResponse.json({ result }, { status: 200 });
   } catch (error) {
