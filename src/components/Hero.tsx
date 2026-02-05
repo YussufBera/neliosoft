@@ -71,7 +71,7 @@ export default function Hero() {
                         playsInline
                         className={styles.video}
                         style={{
-                            opacity: index === currentVideo ? 0.6 : 0,
+                            opacity: index === currentVideo ? 0.35 : 0,
                             transition: 'opacity 1.5s ease-in-out',
                             position: 'absolute',
                             top: 0,
