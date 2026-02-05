@@ -117,6 +117,7 @@ export const translations = {
             success_title: "Nachricht gesendet!",
             success_message: "Wir werden uns so schnell wie möglich bei Ihnen melden.",
             send_new: "Neue Nachricht senden",
+            ready_modernize: "Bereit, Ihr Geschäft zu modernisieren?",
         },
         footer: {
             rights: "Alle Rechte vorbehalten.",
@@ -238,6 +239,7 @@ export const translations = {
             success_title: "Message Sent!",
             success_message: "We will contact you as soon as possible.",
             send_new: "Send New Message",
+            ready_modernize: "Ready to modernize your business?",
         },
         footer: {
             rights: "All rights reserved.",
@@ -359,6 +361,7 @@ export const translations = {
             success_title: "Mesaj Gönderildi!",
             success_message: "En kısa sürede sizinle iletişime geçeceğiz.",
             send_new: "Yeni Mesaj Gönder",
+            ready_modernize: "İşletmenizi modernleştirmeye hazır mısınız?",
         },
         footer: {
             rights: "Tüm hakları saklıdır.",
@@ -480,6 +483,7 @@ export const translations = {
             success_title: "Peyam Hat Şandin!",
             success_message: "Em ê di demek herî kurt de bi we re têkilî daynin.",
             send_new: "Peyamek Nû Bişîne",
+            ready_modernize: "Amade ne karsaziya xwe nûjen bikin?",
         },
         footer: {
             rights: "Hemû maf parastî ne.",

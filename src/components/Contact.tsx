@@ -56,7 +56,7 @@ export default function Contact() {
                     </div>
 
                     <div className={styles.ctaBox}>
-                        <h3>Ready to modernize your business?</h3>
+                        <h3>{t.contact.ready_modernize}</h3>
                         <button className={styles.ctaButton} onClick={() => window.location.href = '/get-started'}>
                             {t.hero.contact_us} <ArrowRight size={20} />
                         </button>
