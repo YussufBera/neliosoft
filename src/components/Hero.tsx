@@ -50,12 +50,22 @@ export default function Hero() {
         "https://assets.mixkit.co/videos/16325/16325-720.mp4"  // Clinic/Doctor
     ];
 
+    const [loadedVideos, setLoadedVideos] = React.useState<boolean[]>(new Array(videos.length).fill(false));
+
     React.useEffect(() => {
         const timer = setInterval(() => {
             setCurrentVideo((prev) => (prev + 1) % videos.length);
         }, 8000);
         return () => clearInterval(timer);
     }, []);
+
+    const handleVideoLoad = (index: number) => {
+        setLoadedVideos(prev => {
+            const newState = [...prev];
+            newState[index] = true;
+            return newState;
+        });
+    };
 
     return (
         <section className={styles.hero}>
@@ -69,9 +79,10 @@ export default function Hero() {
                         loop
                         muted
                         playsInline
+                        onLoadedData={() => handleVideoLoad(index)}
                         className={styles.video}
                         style={{
-                            opacity: index === currentVideo ? 0.35 : 0,
+                            opacity: (index === currentVideo && loadedVideos[index]) ? 0.35 : 0,
                             transition: 'opacity 1.5s ease-in-out',
                             position: 'absolute',
                             top: 0,
