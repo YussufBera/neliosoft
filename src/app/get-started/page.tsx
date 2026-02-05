@@ -196,11 +196,11 @@ export default function GetStartedPage() {
                                             />
                                         </div>
                                         <button type="submit" className={styles.submitButton}>
-                                            Next <ChevronRight size={16} />
+                                            {t.get_started.next} <ChevronRight size={16} />
                                         </button>
                                     </form>
                                     <button onClick={() => setStep('business_type')} className={styles.backButton}>
-                                        <ChevronLeft size={16} /> Back
+                                        <ChevronLeft size={16} /> {t.get_started.back}
                                     </button>
                                 </motion.div>
                             )}
@@ -229,7 +229,7 @@ export default function GetStartedPage() {
                                         ))}
                                     </div>
                                     <button onClick={() => setStep('business_name')} className={styles.backButton}>
-                                        <ChevronLeft size={16} /> Back
+                                        <ChevronLeft size={16} /> {t.get_started.back}
                                     </button>
                                 </motion.div>
                             )}
@@ -258,7 +258,7 @@ export default function GetStartedPage() {
                                         ))}
                                     </div>
                                     <button onClick={() => setStep('team_size')} className={styles.backButton}>
-                                        <ChevronLeft size={16} /> Back
+                                        <ChevronLeft size={16} /> {t.get_started.back}
                                     </button>
                                 </motion.div>
                             )}
@@ -287,7 +287,7 @@ export default function GetStartedPage() {
                                         ))}
                                     </div>
                                     <button onClick={() => setStep('daily_visitors')} className={styles.backButton}>
-                                        <ChevronLeft size={16} /> Back
+                                        <ChevronLeft size={16} /> {t.get_started.back}
                                     </button>
                                 </motion.div>
                             )}
@@ -340,7 +340,7 @@ export default function GetStartedPage() {
                                         )}
                                     </form>
                                     <button onClick={() => setStep('budget')} type="button" className={styles.backButton}>
-                                        <ChevronLeft size={16} /> Back
+                                        <ChevronLeft size={16} /> {t.get_started.back}
                                     </button>
                                 </motion.div>
                             )}

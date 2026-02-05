@@ -203,6 +203,10 @@
     cursor: pointer;
     transition: background 0.2s;
     margin-top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
 .submitButton:hover {

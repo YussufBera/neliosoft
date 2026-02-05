@@ -89,6 +89,8 @@ export const translations = {
             submit: "Anfrage senden",
             success_title: "Anfrage erhalten!",
             success_msg: "Wir werden uns in Kürze bei Ihnen melden, um Ihre maßgeschneiderte Lösung zu besprechen.",
+            next: "Weiter",
+            back: "Zurück",
         },
         portfolio: {
             title: "Unsere Arbeit",
@@ -208,6 +210,8 @@ export const translations = {
             submit: "Submit Request",
             success_title: "Request Received!",
             success_msg: "We will contact you shortly to discuss your tailored solution.",
+            next: "Next",
+            back: "Back",
         },
         portfolio: {
             title: "Our Work",
@@ -327,6 +331,8 @@ export const translations = {
             submit: "Talebi Gönder",
             success_title: "Talep Alındı!",
             success_msg: "Size özel çözümümüzü görüşmek için en kısa sürede sizinle iletişime geçeceğiz.",
+            next: "İleri",
+            back: "Geri",
         },
         portfolio: {
             title: "Çalışmalarımız",
@@ -446,6 +452,8 @@ export const translations = {
             submit: "Daxwazê Bişîne",
             success_title: "Daxwaz Hat Wergirtin!",
             success_msg: "Em ê di demek kurt de bi we re têkilî daynin da ku em çareseriya xweya taybetî nîqaş bikin.",
+            next: "Pêş",
+            back: "Paş",
         },
         portfolio: {
             title: "Karên Me",
