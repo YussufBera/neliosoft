@@ -19,13 +19,24 @@ export async function GET(request: Request) {
         status VARCHAR(20) DEFAULT 'unread'
       );
 
-      ALTER TABLE messages ADD COLUMN IF NOT EXISTS business_type VARCHAR(100);
-      ALTER TABLE messages ADD COLUMN IF NOT EXISTS team_size VARCHAR(50);
-      ALTER TABLE messages ADD COLUMN IF NOT EXISTS budget VARCHAR(100);
-      ALTER TABLE messages ADD COLUMN IF NOT EXISTS business_name VARCHAR(255);
-      ALTER TABLE messages ADD COLUMN IF NOT EXISTS daily_visitors VARCHAR(50);
-    `);
-    return NextResponse.json({ result }, { status: 200 });
+    // Add columns individually to ensure they exist
+    const columns = [
+        'business_type VARCHAR(100)',
+        'team_size VARCHAR(50)',
+        'budget VARCHAR(100)',
+        'business_name VARCHAR(255)',
+        'daily_visitors VARCHAR(50)'
+    ];
+
+    for (const col of columns) {
+        try {
+            await pool.query(`ALTER TABLE messages ADD COLUMN IF NOT EXISTS ${ col }`);
+        } catch (e) {
+            console.error(`Failed to add column ${ col }: `, e);
+        }
+    }
+
+    return NextResponse.json({ result: 'Schema updated successfully' }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ error }, { status: 500 });
   }
