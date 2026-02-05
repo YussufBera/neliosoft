@@ -74,9 +74,10 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.92);
-    /* Increased opacity for legibility */
-    backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.6);
+    /* Significantly reduced from 0.8 */
+    backdrop-filter: blur(3px);
+    /* Reduced blur for clarity */
 }
 
 .video {

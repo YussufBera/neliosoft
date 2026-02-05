@@ -93,16 +93,16 @@ export default function Hero() {
                         onCanPlay={() => handleVideoLoad(index)} // Dual event check
                         className={styles.video}
                         style={{
-                            opacity: (index === currentVideo && loadedVideos[index]) ? 0.5 : 0, // Increased from 0.35 to 0.5
+                            opacity: (index === currentVideo && loadedVideos[index]) ? 1 : 0, // Full opacity for the active video
                             transition: 'opacity 1.5s ease-in-out',
                             position: 'absolute',
                             top: 0,
                             left: 0,
-                            zIndex: index === currentVideo ? 1 : 0
+                            zIndex: 0 // Base layer
                         }}
                     />
                 ))}
-                <div className={styles.videoOverlay} style={{ zIndex: 2 }} />
+                <div className={styles.videoOverlay} style={{ zIndex: 1 }} /> {/* Overlay on top of video */}
             </div>
 
             <motion.div
