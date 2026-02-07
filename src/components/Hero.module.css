@@ -74,10 +74,10 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.2);
-    /* Light dark filter */
-    backdrop-filter: blur(1px);
-    /* Minimal blur */
+    background: rgba(0, 0, 0, 0.4);
+    /* Moderate dark filter */
+    backdrop-filter: blur(2px);
+    /* Moderate blur */
 }
 
 .video {
