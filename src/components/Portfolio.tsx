@@ -22,6 +22,12 @@ export default function Portfolio() {
             link: "https://nail.neliosoft.com",
             image: "/nail-refreshed.png"
         },
+        {
+            title: t.portfolio.project_hair,
+            category: t.portfolio.cat_appointment,
+            link: "https://friseur.neliosoft.com",
+            image: "" // Placeholder or specific image if available
+        },
     ];
 
     return (

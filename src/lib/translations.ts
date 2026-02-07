@@ -102,7 +102,8 @@ export const translations = {
             cat_appointment: "Online-Terminplattform",
             project_migration: "Migrationsberatungsservice",
             cat_consultancy: "Bildungsberatungsplattform",
-            project_nail: "Nailart Studio Reservierung",
+            project_nail: "Nagelstudio Reservierungssystem",
+            project_hair: "Damenfriseur Reservierungssystem",
         },
         contact: {
             title: "Kontaktieren Sie uns",
@@ -224,7 +225,8 @@ export const translations = {
             cat_appointment: "Online Appointment Platform",
             project_migration: "Migration Consultancy Service",
             cat_consultancy: "Educational Consultancy Platform",
-            project_nail: "Nail Art Studio Reservation",
+            project_nail: "Nail Art Studio Reservation System",
+            project_hair: "Women's Hair Salon Reservation System",
         },
         contact: {
             title: "Get in Touch",
@@ -346,7 +348,8 @@ export const translations = {
             cat_appointment: "Online Randevu Platformu",
             project_migration: "Göçmenlik Danışmanlığı",
             cat_consultancy: "Eğitim Danışmanlığı Platformu",
-            project_nail: "Nailart Stüdyo Randevu",
+            project_nail: "Nailart Stüdyosu Randevu Sistemi",
+            project_hair: "Kadın Kuaförü Randevu Sistemi",
         },
         contact: {
             title: "İletişime Geçin",
@@ -468,7 +471,8 @@ export const translations = {
             cat_appointment: "Platforma Randevûya Serhêl",
             project_migration: "Xizmeta Şêwirmendiya Koçberiyê",
             cat_consultancy: "Platforma Şêwirmendiya Perwerdehiyê",
-            project_nail: "Veqetandina Stûdyoya Nailart",
+            project_nail: "Pergala Veqetandina Stûdyoya Nailart",
+            project_hair: "Pergala Veqetandina kuaforên Jinan",
         },
         contact: {
             title: "Têkilî Daynin",
