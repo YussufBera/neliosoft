@@ -74,10 +74,10 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    /* Dark filter */
-    backdrop-filter: blur(3px);
-    /* Reduced blur for clarity */
+    background: rgba(0, 0, 0, 0.2);
+    /* Light dark filter */
+    backdrop-filter: blur(1px);
+    /* Minimal blur */
 }
 
 .video {
@@ -130,6 +130,15 @@
 .highlight {
     position: relative;
     display: inline-block;
+}
+
+.highlightText {
+    background: linear-gradient(to right, #22d3ee, #c084fc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 800;
+    filter: drop-shadow(0 0 20px rgba(192, 132, 252, 0.3));
 }
 
 .subtitle {

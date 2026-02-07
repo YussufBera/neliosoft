@@ -123,7 +123,7 @@ export default function Hero() {
                 </motion.div>
 
                 <motion.h1 className={styles.title} variants={itemVariants}>
-                    {t.hero.title_prefix} <span className="gradient-text">{t.hero.title_highlight}</span> {t.hero.title_suffix}
+                    {t.hero.title_prefix} <span className={styles.highlightText}>{t.hero.title_highlight}</span> {t.hero.title_suffix}
                 </motion.h1>
 
                 <motion.p className={styles.subtitle} variants={itemVariants}>
